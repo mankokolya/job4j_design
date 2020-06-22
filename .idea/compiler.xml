@@ -7,10 +7,10 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="chapter4-JvmAndJmm" />
-        <module name="chapter5-TDD" />
-        <module name="chapter1-DataStructuresAndAlgorithms" />
         <module name="chapter2-InputOutputSystem" />
         <module name="chapter3-DataBases" />
+        <module name="chapter5-TDD" />
+        <module name="chapter1-DataStructuresAndAlgorithms" />
       </profile>
     </annotationProcessing>
   </component>
