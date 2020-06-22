@@ -35,12 +35,4 @@ public class MatrixIterator implements Iterator<Integer> {
         }
         return result;
     }
-
-
-    public static void main(String[] args) {
-        int[][] in = {
-                {1}, {2, 3}
-        };
-        System.out.println(in[0].length);
-    }
 }
