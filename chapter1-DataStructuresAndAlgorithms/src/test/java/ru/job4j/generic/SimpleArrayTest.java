@@ -26,8 +26,8 @@ public class SimpleArrayTest {
         assertThat(simpleArray.get(1), is("John"));
     }
 
-    @Test
-    public void setWhenIndexOutOfBound() throws Exception {
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void setWhenIndexOutOfBound() {
         simpleArray.set(2, "Bill");
     }
 
@@ -38,13 +38,13 @@ public class SimpleArrayTest {
         assertThat(simpleArray.get(1), is("Bill"));
     }
 
-    @Test
-    public void removeWhenIndexOutOfBound() throws Exception {
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void removeWhenIndexOutOfBound() {
         simpleArray.remove(5);
     }
 
-    @Test
-    public void getWhenIndexOutOfBound() throws Exception {
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void getWhenIndexOutOfBound() {
         simpleArray.get(5);
     }
 }

@@ -1,11 +1,9 @@
 package ru.job4j.generic;
 
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.NoSuchElementException;
-import java.util.Objects;
+import java.util.*;
+import java.util.function.Consumer;
 
-public class SimpleArray<T> {
+public class SimpleArray<T> implements Iterable {
     Object[] objects;
     int index = 0;
 
@@ -17,41 +15,43 @@ public class SimpleArray<T> {
         this.objects[index++] = model;
     }
 
-    public void set(int position, T model) {
-        try {
-            if (Objects.checkIndex(position, index) == position) {
-                this.objects[position] = model;
-            }
-        } catch (IndexOutOfBoundsException ex) {
-            System.out.println(ex.getMessage());
+    public void set(int position, T model) throws IndexOutOfBoundsException {
+        if (Objects.checkIndex(position, index) == position) {
+            this.objects[position] = model;
         }
     }
 
-    public void remove(int position) {
-        try {
-            if (Objects.checkIndex(position, index) == position) {
-                this.objects[position] = null;
-                int nextValue = position + 1;
-                while (this.objects[nextValue] != null) {
-                    this.objects[position++] = this.objects[nextValue];
-                    this.objects[nextValue++] = null;
-                }
-                index--;
-            }
-        } catch (IndexOutOfBoundsException ex) {
-            System.out.println(ex.getMessage());
+    public void remove(int position) throws IndexOutOfBoundsException {
+        if (Objects.checkIndex(position, index) == position) {
+            this.objects[position] = null;
+            System.arraycopy(objects, position + 1, objects, position, index - position);
+            index--;
         }
     }
 
-    public T get(int position) {
+
+    public T get(int position) throws IndexOutOfBoundsException {
         T result = (T) new Object();
-        try {
-            if (Objects.checkIndex(position, index) == position) {
-                result = (T) this.objects[position];
-            }
-        } catch (IndexOutOfBoundsException ex) {
-            System.out.println(ex.getMessage());
+        if (Objects.checkIndex(position, index) == position) {
+            result = (T) this.objects[position];
         }
         return result;
+    }
+
+    @Override
+    public Iterator<Object> iterator() {
+        return new Iterator<Object>() {
+            private int position = 0;
+
+            @Override
+            public boolean hasNext() {
+                return objects.length > position;
+            }
+
+            @Override
+            public Object next() {
+                return objects[position++];
+            }
+        };
     }
 }
