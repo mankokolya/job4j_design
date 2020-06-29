@@ -3,7 +3,7 @@ package ru.job4j.generic;
 import java.util.*;
 import java.util.function.Consumer;
 
-public class SimpleArray<T> implements Iterable {
+public class SimpleArray<T> implements Iterable<T> {
     Object[] objects;
     int index = 0;
 
@@ -39,8 +39,8 @@ public class SimpleArray<T> implements Iterable {
     }
 
     @Override
-    public Iterator<Object> iterator() {
-        return new Iterator<Object>() {
+    public Iterator<T> iterator() {
+        return new Iterator<T>() {
             private int position = 0;
 
             @Override
@@ -49,8 +49,11 @@ public class SimpleArray<T> implements Iterable {
             }
 
             @Override
-            public Object next() {
-                return objects[position++];
+            public T next() {
+                if (!hasNext()) {
+                    throw new NoSuchElementException();
+                }
+                return (T) objects[position++];
             }
         };
     }
