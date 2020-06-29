@@ -15,7 +15,7 @@ public class MemStoreTest {
     @Test
     public void add() {
         userStore.add(nick);
-        assertThat(userStore.findById("Nick").get(), is(nick));
+        assertThat(userStore.findById("Nick"), is(nick));
     }
 
     @Test

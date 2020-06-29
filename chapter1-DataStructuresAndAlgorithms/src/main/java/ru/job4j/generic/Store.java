@@ -6,5 +6,5 @@ public interface Store<T extends Base> {
     void add(T model);
     boolean replace(String ig, T model);
     boolean delete(String id);
-    Optional<T> findById(String id);
+    T findById(String id);
 }
