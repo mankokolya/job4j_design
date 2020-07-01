@@ -8,6 +8,7 @@ import java.util.Objects;
 public class MyLinkedList<T> implements Iterable<T> {
     private Node<T> head;
     private Node<T> tail;
+    private int modCount = 0;
     public int size;
 
     public MyLinkedList() {
@@ -19,6 +20,7 @@ public class MyLinkedList<T> implements Iterable<T> {
     public void add(T model) {
         Node<T> tempVal = new Node(model, null);
         size++;
+        modCount++;
         if (head == null) {
             head = tempVal;
             tail = head;
@@ -28,30 +30,27 @@ public class MyLinkedList<T> implements Iterable<T> {
         }
     }
 
-    public T get(int index) {
-        if (Objects.checkIndex(index, size) == index) {
-            Node<T> temp = head;
-            int count = 0;
-            while (count != index) {
-                temp = temp.getNext();
-                count++;
-            }
-            return temp.getData();
+    public T get(int index) throws IndexOutOfBoundsException {
+        Objects.checkIndex(index, size);
+        Node<T> temp = head;
+        int count = 0;
+        while (count != index) {
+            temp = temp.getNext();
+            count++;
         }
-        throw new IndexOutOfBoundsException();
+        return temp.getData();
     }
-
 
     @Override
     public Iterator<T> iterator() {
         return new Iterator<>() {
-            final int expectedModCount = size;
+            final int expectedModCount = modCount;
             Node<T> tempVal = head;
 
             @Override
             public boolean hasNext() {
                 checkForModification(expectedModCount);
-                return tail != head || tail != null;
+                return tempVal != null;
             }
 
             @Override
