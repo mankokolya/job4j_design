@@ -1,0 +1,55 @@
+package ru.job4j.collection;
+
+import org.junit.Test;
+
+import java.util.ConcurrentModificationException;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.*;
+
+public class MyLinkedListTest {
+
+    @Test
+    public void addAndGet() {
+        MyLinkedList<String> myLink = new MyLinkedList<>();
+        myLink.add("Hello");
+        myLink.add("Java");
+        String result = myLink.get(1);
+        assertThat(result, is("Java"));
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void whenGetIndexOutOfBound() {
+        MyLinkedList<String> myLink = new MyLinkedList<>();
+        myLink.add("Hello");
+        myLink.add("Java");
+        String result = myLink.get(2);
+
+    }
+
+    @Test
+    public void checkIterator() {
+        MyLinkedList<String> myLink = new MyLinkedList<>();
+        myLink.add("Hello");
+        String result = myLink.iterator().next();
+        assertThat(result, is("Hello"));
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void whenEmptyIterator() {
+        MyLinkedList<String> myLink = new MyLinkedList<>();
+        String result = myLink.iterator().next();
+    }
+
+    @Test(expected = ConcurrentModificationException.class)
+    public void whenConcurrentModificationIterator() {
+        MyLinkedList<String> myLink = new MyLinkedList<>();
+        myLink.add("Hello");
+        Iterator<String> it = myLink.iterator();
+        myLink.add("Java");
+        it.next();
+    }
+
+}
