@@ -4,6 +4,7 @@ import java.util.*;
 
 public class SimpleArray<T> implements Iterable<T> {
     private Object[] container;
+    private int size = 0;
     private int modCount = 0;
 
     public SimpleArray(int size) {
@@ -15,17 +16,16 @@ public class SimpleArray<T> implements Iterable<T> {
     }
 
     public T get(int index) throws IndexOutOfBoundsException {
-        if (Objects.checkIndex(index, modCount) == index) {
-            return (T) container[index];
-        }
-        throw new IndexOutOfBoundsException();
+        Objects.checkIndex(index, size);
+        return (T) container[index];
     }
 
     public void add(T model) {
         if (modCount >= container.length * 0.8) {
             container = Arrays.copyOf(container, container.length * 2);
         }
-        container[modCount++] = model;
+        container[size++] = model;
+        modCount++;
     }
 
     @Override
@@ -37,7 +37,7 @@ public class SimpleArray<T> implements Iterable<T> {
             @Override
             public boolean hasNext() {
                 checkForModification(expectedModCount);
-                return position < modCount;
+                return position < size;
             }
 
             @Override
