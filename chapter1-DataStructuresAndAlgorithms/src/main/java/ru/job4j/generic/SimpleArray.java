@@ -1,11 +1,10 @@
 package ru.job4j.generic;
 
 import java.util.*;
-import java.util.function.Consumer;
 
 public class SimpleArray<T> implements Iterable<T> {
-    Object[] objects;
-    int index = 0;
+    private Object[] objects;
+    private int index = 0;
 
     public SimpleArray(int size) {
         this.objects = new Object[size];
@@ -16,17 +15,15 @@ public class SimpleArray<T> implements Iterable<T> {
     }
 
     public void set(int position, T model) throws IndexOutOfBoundsException {
-        if (Objects.checkIndex(position, index) == position) {
-            this.objects[position] = model;
-        }
+        Objects.checkIndex(position, index);
+        this.objects[position] = model;
     }
 
     public void remove(int position) throws IndexOutOfBoundsException {
-        if (Objects.checkIndex(position, index) == position) {
-            this.objects[position] = null;
-            System.arraycopy(objects, position + 1, objects, position, index - position);
-            index--;
-        }
+        Objects.checkIndex(position, index);
+        this.objects[position] = null;
+        System.arraycopy(objects, position + 1, objects, position, index - position);
+        index--;
     }
 
 
@@ -40,7 +37,7 @@ public class SimpleArray<T> implements Iterable<T> {
 
     @Override
     public Iterator<T> iterator() {
-        return new Iterator<T>() {
+        return new Iterator<>() {
             private int position = 0;
 
             @Override
