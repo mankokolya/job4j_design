@@ -52,4 +52,28 @@ public class MyLinkedListTest {
         it.next();
     }
 
+    @Test(expected = NoSuchElementException.class)
+    public void whenDeleteFirst() {
+        MyLinkedList<Integer> linked = new MyLinkedList<>();
+        linked.add(1);
+        linked.deleteFirst();
+        linked.iterator().next();
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void whenDeleteEmptyLinked() {
+        MyLinkedList<Integer> linked = new MyLinkedList<>();
+        linked.deleteFirst();
+    }
+
+    @Test
+    public void whenMultiDelete() {
+        MyLinkedList<Integer> linked = new MyLinkedList<>();
+        linked.add(1);
+        linked.add(2);
+        linked.deleteFirst();
+        Iterator<Integer> it = linked.iterator();
+        assertThat(it.next(), is(2));
+    }
+
 }

@@ -41,6 +41,15 @@ public class MyLinkedList<T> implements Iterable<T> {
         return temp.getData();
     }
 
+    public void deleteFirst() {
+        if (head == null) {
+            throw new NoSuchElementException();
+        }
+        Node<T> temp = head.getNext();
+        head = null;
+        head = temp;
+    }
+
     @Override
     public Iterator<T> iterator() {
         return new Iterator<>() {
