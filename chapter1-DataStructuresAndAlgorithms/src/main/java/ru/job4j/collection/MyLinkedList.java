@@ -41,29 +41,46 @@ public class MyLinkedList<T> implements Iterable<T> {
         return temp.getData();
     }
 
-    public void deleteFirst() {
+    public T deleteFirst() {
         if (head == null) {
             throw new NoSuchElementException();
         }
-        Node<T> temp = head.getNext();
-        head = null;
-        head = temp;
+        Node<T> temp = head;
+        head = head.getNext();
+        temp.setNext(null);
         size--;
         modCount++;
+        return temp.getData();
     }
 
-    public void deleteLast() {
-        Node<T> temp = head;
-        if (tail == null) {
+    public T deleteLast() {
+        T value;
+        if (head == null) {
             throw new NoSuchElementException();
         }
-        while(temp.getNext() != null) {
-            temp = temp.getNext();
+        if (head.getNext() == null) {
+            value = head.getData();
+            head.setNext(null);
+        } else {
+            Node<T> previousToLast = head;
+
+            while (previousToLast.getNext().getNext() != null) {
+                previousToLast = previousToLast.getNext();
+            }
+            value = previousToLast.getNext().getData();
+            previousToLast.setNext(null);
         }
-        tail = null;
-        tail = temp;
         size--;
         modCount++;
+        return value;
+    }
+
+    public Node<T> getTail() {
+        return this.tail;
+    }
+
+    public Node<T> getHead() {
+        return this.head;
     }
 
     @Override

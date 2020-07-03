@@ -80,9 +80,20 @@ public class MyLinkedListTest {
     public void deleteLast() {
         MyLinkedList<String> myLink = new MyLinkedList<>();
         myLink.add("Hello");
-        myLink.add("Java");
+        myLink.add("Maven");
+        myLink.add("Spring");
         myLink.deleteLast();
-        assertThat(myLink.size, is(1));
+        String result = myLink.deleteLast();
+        assertEquals("Maven", result);
+    }
+
+    @Test
+    public void deleteFirst() {
+        MyLinkedList<String> myLink = new MyLinkedList<>();
+        myLink.add("Hello");
+        myLink.add("Java");
+        String result = myLink.deleteFirst();
+        assertThat(result, is("Hello"));
     }
 
 }
