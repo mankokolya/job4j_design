@@ -48,6 +48,22 @@ public class MyLinkedList<T> implements Iterable<T> {
         Node<T> temp = head.getNext();
         head = null;
         head = temp;
+        size--;
+        modCount++;
+    }
+
+    public void deleteLast() {
+        Node<T> temp = head;
+        if (tail == null) {
+            throw new NoSuchElementException();
+        }
+        while(temp.getNext() != null) {
+            temp = temp.getNext();
+        }
+        tail = null;
+        tail = temp;
+        size--;
+        modCount++;
     }
 
     @Override
@@ -77,7 +93,7 @@ public class MyLinkedList<T> implements Iterable<T> {
     }
 
     final void checkForModification(int expectedModCount) {
-        if (size != expectedModCount) {
+        if (modCount != expectedModCount) {
             throw new ConcurrentModificationException();
         }
     }

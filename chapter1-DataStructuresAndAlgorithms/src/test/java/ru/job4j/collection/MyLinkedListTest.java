@@ -76,4 +76,13 @@ public class MyLinkedListTest {
         assertThat(it.next(), is(2));
     }
 
+    @Test
+    public void deleteLast() {
+        MyLinkedList<String> myLink = new MyLinkedList<>();
+        myLink.add("Hello");
+        myLink.add("Java");
+        myLink.deleteLast();
+        assertThat(myLink.size, is(1));
+    }
+
 }
