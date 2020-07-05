@@ -96,4 +96,25 @@ public class MyLinkedListTest {
         assertThat(result, is("Hello"));
     }
 
+    @Test
+    public void whenAddThenIter() {
+        MyLinkedList<Integer> linked = new MyLinkedList<>();
+        linked.add(1);
+        linked.add(2);
+        Iterator<Integer> it = linked.iterator();
+        assertThat(it.next(), is(1));
+        assertThat(it.next(), is(2));
+    }
+
+    @Test
+    public void whenAddAndRevertThenIter() {
+        MyLinkedList<Integer> linked = new MyLinkedList<>();
+        linked.add(1);
+        linked.add(2);
+        linked.reverse();
+        Iterator<Integer> it = linked.iterator();
+        assertThat(it.next(), is(2));
+        assertThat(it.next(), is(1));
+    }
+
 }

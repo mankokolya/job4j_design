@@ -41,6 +41,19 @@ public class MyLinkedList<T> implements Iterable<T> {
         return temp.getData();
     }
 
+    public void reverse() {
+        Node<T> prev = null;
+        Node<T> current = head;
+        Node<T> next;
+        while (current != null) {
+            next = current.getNext();
+            current.setNext(prev);
+            prev = current;
+            current = next;
+        }
+        head = prev;
+    }
+
     public T deleteFirst() {
         if (head == null) {
             throw new NoSuchElementException();
@@ -73,14 +86,6 @@ public class MyLinkedList<T> implements Iterable<T> {
         size--;
         modCount++;
         return value;
-    }
-
-    public Node<T> getTail() {
-        return this.tail;
-    }
-
-    public Node<T> getHead() {
-        return this.head;
     }
 
     @Override
