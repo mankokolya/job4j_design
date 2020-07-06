@@ -13,7 +13,7 @@ public class SimpleQueue<T> {
     }
 
     public T getFirstQueueValue() {
-        while (out.isEmpty() && !in.isEmpty()) {
+        if (out.isEmpty() && !in.isEmpty()) {
             while (!in.isEmpty()) {
                 out.push(in.pop());
             }
