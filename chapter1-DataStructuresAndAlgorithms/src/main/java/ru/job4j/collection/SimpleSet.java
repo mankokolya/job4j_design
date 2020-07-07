@@ -1,5 +1,7 @@
 package ru.job4j.collection;
 
+import java.util.Objects;
+
 public class SimpleSet<T> {
     private final SimpleArray<T> setContainer;
 
@@ -13,7 +15,7 @@ public class SimpleSet<T> {
     public boolean checkDuplicate(T value) {
         boolean result = false;
         for (T t : setContainer) {
-            if (t.equals(value)) {
+            if (Objects.equals(t, value)) {
                 result = true;
                 break;
             }
