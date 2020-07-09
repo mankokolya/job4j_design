@@ -1,8 +1,8 @@
 package ru.job4j.collection;
 
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import static java.util.Objects.hash;
 
@@ -18,18 +18,42 @@ public class MyHashMap<K, V> implements Iterable<K> {
         this.entriesContainer = new Entry[capacity];
     }
 
+    MyHashMap(int capacity) {
+        this.capacity = capacity;
+        this.entriesContainer = new Entry[this.capacity];
+    }
 
     public boolean insert(K key, V value) {
         boolean result = false;
         Entry<K, V> newNode = new Entry<>(key, value);
         int index = indexOf(key);
         if (entriesInContainer >= entriesContainer.length * loadFactor) {
-            entriesContainer = Arrays.copyOf(entriesContainer, entriesContainer.length * 2);
+            capacity = entriesContainer.length * 2;
+            entriesContainer = Arrays.copyOf(entriesContainer, capacity);
         }
         if (!checkKeyDuplicate(key)) {
             entriesContainer[index] = newNode;
             modCount++;
             entriesInContainer++;
+            result = true;
+        }
+        return result;
+    }
+
+    public V get(K key) throws NoSuchElementException {
+        if (entriesContainer[indexOf(key)] == null) {
+            throw new NoSuchElementException();
+        }
+        return (V) entriesContainer[indexOf(key)].value;
+    }
+
+    public boolean delete(K key) {
+        boolean result = false;
+        int index = indexOf(key);
+        if(entriesContainer[index] != null) {
+            entriesContainer[index] = null;
+            modCount++;
+            entriesInContainer--;
             result = true;
         }
         return result;
@@ -45,7 +69,6 @@ public class MyHashMap<K, V> implements Iterable<K> {
                 .anyMatch(node -> Objects.equals(node.key, key));
     }
 
-
     private static class Entry<K, V> {
         private final K key;
         private V value;
@@ -53,14 +76,6 @@ public class MyHashMap<K, V> implements Iterable<K> {
         public Entry(K key, V value) {
             this.key = key;
             this.value = value;
-        }
-
-        public K getKey() {
-            return key;
-        }
-
-        public V getValue() {
-            return value;
         }
 
         @Override
@@ -87,6 +102,38 @@ public class MyHashMap<K, V> implements Iterable<K> {
 
     @Override
     public Iterator<K> iterator() {
-        return null;
+        return new Iterator<>() {
+            private int position = 0;
+            private int expectedModCount = modCount;
+            final Entry[] noNullEntries = Arrays.stream(entriesContainer)
+                    .filter(Objects::nonNull)
+                    .toArray(Entry[]::new);
+
+            @Override
+            public boolean hasNext() {
+                checkForModification(expectedModCount);
+                return position < noNullEntries.length;
+            }
+
+            @Override
+            public K next() {
+                if (!hasNext()) {
+                    throw new NoSuchElementException();
+                }
+                return (K) noNullEntries[position++].key;
+            }
+
+            private void skipNull() {
+                while(entriesContainer[position] == null && position < capacity) {
+                    position++;
+                }
+            }
+        };
+    }
+
+    final void checkForModification(int expectedModCount) {
+        if (modCount != expectedModCount) {
+            throw new ConcurrentModificationException();
+        }
     }
 }
