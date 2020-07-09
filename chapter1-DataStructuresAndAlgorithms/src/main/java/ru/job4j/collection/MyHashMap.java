@@ -122,12 +122,6 @@ public class MyHashMap<K, V> implements Iterable<K> {
                 }
                 return (K) noNullEntries[position++].key;
             }
-
-            private void skipNull() {
-                while(entriesContainer[position] == null && position < capacity) {
-                    position++;
-                }
-            }
         };
     }
 
