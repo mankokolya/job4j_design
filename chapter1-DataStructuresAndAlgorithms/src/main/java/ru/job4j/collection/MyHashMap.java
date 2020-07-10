@@ -27,11 +27,12 @@ public class MyHashMap<K, V> implements Iterable<K> {
         boolean result = false;
         Entry<K, V> newNode = new Entry<>(key, value);
         int index = indexOf(key);
+        System.out.println(key + " " + index);
         if (entriesInContainer >= entriesContainer.length * loadFactor) {
             capacity = entriesContainer.length * 2;
-            entriesContainer = Arrays.copyOf(entriesContainer, capacity);
+            shiftEntriesIndex();
         }
-        if (!checkKeyDuplicate(key)) {
+        if (entriesContainer[index] == null) {
             entriesContainer[index] = newNode;
             modCount++;
             entriesInContainer++;
@@ -40,17 +41,27 @@ public class MyHashMap<K, V> implements Iterable<K> {
         return result;
     }
 
-    public V get(K key) throws NoSuchElementException {
-        if (entriesContainer[indexOf(key)] == null) {
-            throw new NoSuchElementException();
+    private Entry[] shiftEntriesIndex() {
+        Entry[] temp = new Entry[capacity];
+        for (Entry entry : entriesContainer) {
+            if (entry != null) {
+                temp[indexOf((K) entry.key)] = entry;
+            }
         }
-        return (V) entriesContainer[indexOf(key)].value;
+        return temp;
+    }
+
+    public V get(K key) {
+        Entry valueToReturn = entriesContainer[indexOf(key)];
+
+        return valueToReturn == null ? null : (V) valueToReturn.value;
     }
 
     public boolean delete(K key) {
         boolean result = false;
         int index = indexOf(key);
-        if(entriesContainer[index] != null) {
+
+        if (entriesContainer[index] != null && Objects.equals(entriesContainer[index].key, key)) {
             entriesContainer[index] = null;
             modCount++;
             entriesInContainer--;
@@ -63,11 +74,6 @@ public class MyHashMap<K, V> implements Iterable<K> {
         return key.hashCode() & (this.capacity - 1);
     }
 
-    private boolean checkKeyDuplicate(K key) {
-        return Arrays.stream(entriesContainer)
-                .filter(Objects::nonNull)
-                .anyMatch(node -> Objects.equals(node.key, key));
-    }
 
     private static class Entry<K, V> {
         private final K key;
@@ -104,15 +110,13 @@ public class MyHashMap<K, V> implements Iterable<K> {
     public Iterator<K> iterator() {
         return new Iterator<>() {
             private int position = 0;
-            private int expectedModCount = modCount;
-            final Entry[] noNullEntries = Arrays.stream(entriesContainer)
-                    .filter(Objects::nonNull)
-                    .toArray(Entry[]::new);
+            private int countEntries = 0;
+            private final int expectedModCount = modCount;
 
             @Override
             public boolean hasNext() {
                 checkForModification(expectedModCount);
-                return position < noNullEntries.length;
+                return countEntries < entriesInContainer;
             }
 
             @Override
@@ -120,7 +124,20 @@ public class MyHashMap<K, V> implements Iterable<K> {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
-                return (K) noNullEntries[position++].key;
+                countEntries++;
+                return findNextValue();
+            }
+
+            private K findNextValue() {
+                K value = null;
+                for (int i = position; i < entriesContainer.length; i++) {
+                    if (entriesContainer[i] != null) {
+                        value = (K) entriesContainer[i].key;
+                        position = i + 1;
+                        break;
+                    }
+                }
+                return value;
             }
         };
     }

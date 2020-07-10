@@ -33,7 +33,7 @@ public class MyHashMapTest {
         assertEquals(nick, map.get("Nick"));
     }
 
-    @Test (expected = NoSuchElementException.class)
+    @Test
     public void deleteThenGet() {
         map.insert(nick.getName(), nick);
         map.delete("Nick");
@@ -45,7 +45,6 @@ public class MyHashMapTest {
         map.insert(nick.getName(), nick);
         assertTrue(map.delete("Nick"));
     }
-
 
     @Test
     public void whenAddThenIt() {
@@ -67,5 +66,4 @@ public class MyHashMapTest {
         map.insert(bill.getName(), bill);
         it.next();
     }
-
 }
