@@ -7,14 +7,13 @@ import java.util.stream.Collectors;
 public class Analyze {
     public Info diff(List<User> previous, List<User> current) {
         Info info = new Info();
-        Map<Integer, String> previousMap = previous.stream().collect(Collectors.toMap(User::getId, User::getName));
         Map<Integer, String> currentMap = current.stream().collect(Collectors.toMap(User::getId, User::getName));
-        for (Integer id : previousMap.keySet()) {
-            if (!currentMap.containsKey(id)) {
+        for (User user : previous) {
+            if (!currentMap.containsKey(user.id)) {
                 info.deleted++;
             } else {
-                String currentUserName = currentMap.remove(id);
-                if (previousMap.get(id).equals(currentUserName)) {
+                String currentUserName = currentMap.remove(user.id);
+                if (user.name.equals(currentUserName)) {
                     info.changed++;
                 }
             }
