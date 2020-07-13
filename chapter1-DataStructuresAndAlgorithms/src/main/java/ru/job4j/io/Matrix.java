@@ -18,7 +18,7 @@ public class Matrix {
                 for (int j = 1; j <= size; j++) {
                     out.write(((i * j) + "\t").getBytes());
                 }
-                out.write("\n".getBytes());
+                out.write(System.lineSeparator().getBytes());
             }
         } catch (Exception e) {
             e.printStackTrace();
