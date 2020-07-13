@@ -1,40 +1,42 @@
 package ru.job4j.collection.test;
 
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class Analyze {
     public Info diff(List<User> previous, List<User> current) {
         Info info = new Info();
-        for (User user : previous) {
-            int indexInCurrent = current.indexOf(user);
-            if (indexInCurrent == -1) {
+        Map<Integer, String> previousMap = previous.stream().collect(Collectors.toMap(User::getId, User::getName));
+        Map<Integer, String> currentMap = current.stream().collect(Collectors.toMap(User::getId, User::getName));
+        for (Integer id : previousMap.keySet()) {
+            if (!currentMap.containsKey(id)) {
                 info.deleted++;
             } else {
-                User currentUser = current.remove(indexInCurrent);
-                if (!user.name.equals(currentUser.name)) {
+                String currentUserName = currentMap.remove(id);
+                if (previousMap.get(id).equals(currentUserName)) {
                     info.changed++;
                 }
             }
         }
-        info.added = current.size();
+        info.added = currentMap.size();
         return info;
     }
 
     public static class User implements Comparable<User> {
+        public int getId() {
+            return id;
+        }
+
+        public String getName() {
+            return name;
+        }
+
         int id;
         String name;
 
         User(int id, String name) {
             this.id = id;
-            this.name = name;
-        }
-
-        public void setId(int id) {
-            this.id = id;
-        }
-
-        public void setName(String name) {
             this.name = name;
         }
 
