@@ -16,7 +16,5 @@ public class ReadFile {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
     }
 }
