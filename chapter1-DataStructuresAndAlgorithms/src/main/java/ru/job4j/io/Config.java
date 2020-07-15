@@ -18,17 +18,14 @@ public class Config {
     }
 
     public void load() {
-        StringJoiner out = new StringJoiner(System.lineSeparator());
         try (BufferedReader read = new BufferedReader(new FileReader(this.path))) {
-            read.lines().forEach(out::add);
+            values = read.lines().filter(property -> !property.startsWith("#"))
+                    .filter(property -> !property.isEmpty())
+                    .collect(Collectors.toMap(property -> property.split("=")[0],
+                            property -> property.split("=")[1]));
         } catch (Exception e) {
             e.printStackTrace();
         }
-        String[] properties = out.toString().split(System.lineSeparator());
-        values = Arrays.stream(properties)
-                .filter(property -> !property.startsWith("#"))
-                .filter(property -> !property.isEmpty())
-                .collect(Collectors.toMap(property -> property.split("=")[0], property -> property.split("=")[1]));
     }
 
     public String value(String key) {
