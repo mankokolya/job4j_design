@@ -1,37 +1,63 @@
 package ru.job4j.io;
 
 import java.io.*;
-import java.nio.Buffer;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.*;
-import java.util.stream.Collectors;
+import java.util.function.Predicate;
 
 public class Analyse {
+    private Iterator<String[]> spIterator;
+    private final List<Integer> workingServer = List.of(200, 300);
+    private final List<Integer> unavailableServer = List.of(400, 500);
+
     public void unavailable(String source, String target) {
-        List<String[]> spitedSource = new ArrayList<>();
-        try (BufferedReader in = new BufferedReader(new FileReader(source))) {
-            in.lines().map(s -> s.split(" ")).forEach(spitedSource::add);
+        spIterator = readSource(source).iterator();
+        writeToFile(target, findServerUnavailable());
+    }
 
-            for (String[] string : spitedSource
-            ) {
-                System.out.println(Arrays.toString(string));
+    private String findServerUnavailable() {
+        StringJoiner unavailableTime = new StringJoiner(System.lineSeparator());
 
-            }
+        while (spIterator.hasNext()) {
+            String notWorkingTime = findNextType(unavailableServer::contains);
+            String workingTime = findNextType(workingServer::contains);
+            StringJoiner temp = new StringJoiner(" - ");
+            temp.add(notWorkingTime);
+            temp.add(workingTime);
+            unavailableTime.add(temp.toString());
+        }
+        return unavailableTime.toString();
+    }
+
+    private void writeToFile(String target, String data) {
+        try (PrintWriter out = new PrintWriter(new FileOutputStream(target))) {
+            out.println(data);
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
-    public static void main(String[] args) {
-//        try (PrintWriter out = new PrintWriter(new FileOutputStream("unavailable.csv"))) {
-//            out.println("15:01:30;15:02:32");
-//            out.println("15:10:30;23:12:32");
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-        Analyse analyse = new Analyse();
-        analyse.unavailable("server.log", "unavailable.csv");
+    private String findNextType(Predicate<Integer> predicate) {
+        String time = " ";
+        while (spIterator.hasNext()) {
+            String[] typeAndTime = spIterator.next();
+            int type = Integer.parseInt(typeAndTime[0]);
+            if (predicate.test(type)) {
+                time = typeAndTime[1];
+                break;
+            }
+        }
+        return time;
+    }
+
+    private List<String[]> readSource(String source) {
+        List<String[]> splitted = new ArrayList<>();
+        try (BufferedReader in = new BufferedReader(new FileReader(source))) {
+            in.lines()
+                    .map(s -> s.split(" "))
+                    .forEach(splitted::add);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return splitted;
     }
 }
