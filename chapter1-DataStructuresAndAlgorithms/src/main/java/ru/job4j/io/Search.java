@@ -1,18 +1,19 @@
 package ru.job4j.io;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-
 public class Search {
     public static void main(String[] args) {
-        Path start = Paths.get(".");
+        if (args.length == 0) {
+            throw new IllegalArgumentException("Root folder is null. Use java -jar dir.jar ROOT_FOLDER");
+        }
+        Path start = Paths.get(args[0]);
         try {
-            search(start, "java").forEach(System.out::println);
+            search(start, args[1]).forEach(System.out::println);
         } catch (IOException e) {
             e.printStackTrace();
         }
