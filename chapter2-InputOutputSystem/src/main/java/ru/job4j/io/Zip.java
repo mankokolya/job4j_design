@@ -1,7 +1,6 @@
 package ru.job4j.io;
 
 import java.io.*;
-import java.nio.file.FileVisitor;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -11,8 +10,30 @@ import java.util.zip.ZipOutputStream;
 
 public class Zip {
     public void packFiles(List<Path> sources, File target) {
-        for (Path file : sources) {
-            packSingleFile(file.toFile(), target);
+        try (ZipOutputStream zip = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(target)))) {
+            for (Path path : sources) {
+                zipFile(path.toFile(), target.getName(), zip);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void zipFile(File fileToZip, String fileName, ZipOutputStream zipOutput) throws IOException {
+        if (fileToZip.isHidden()) {
+            return;
+        }
+        if (fileToZip.isDirectory()) {
+            if (fileName.endsWith("/")) {
+                zipOutput.putNextEntry(new ZipEntry(fileName));
+            } else {
+                zipOutput.putNextEntry(new ZipEntry(fileName + "/"));
+            }
+
+            File[] children = fileToZip.listFiles();
+            for (File childFile : Objects.requireNonNull(children)) {
+                zipFile(childFile, fileName + "/" + childFile.getName(), zipOutput);
+            }
         }
     }
 
