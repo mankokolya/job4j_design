@@ -1,0 +1,10 @@
+User: hello
+Chat in
+User: java
+Chat probably
+User: stop
+User: bil
+User: continue
+User: maven
+Chat So
+User: exit
