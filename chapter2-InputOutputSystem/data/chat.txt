@@ -1,10 +1,8 @@
-User: hello
-Chat in
 User: java
-Chat probably
-User: stop
-User: bil
+Chat amongst
+User: job4j
+Chat hurt,
 User: continue
-User: maven
-Chat So
+Chat amongst
+User: stop
 User: exit

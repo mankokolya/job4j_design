@@ -74,8 +74,8 @@ public class ConsoleChat {
     }
 
     public static void main(String[] args) {
-        File text = new File("C:\\projects\\job4j_design\\chapter2-InputOutputSystem\\data\\data.txt");
-        File chat = new File("C:\\projects\\job4j_design\\chapter2-InputOutputSystem\\data\\chat.txt");
+        File text = new File(".\\chapter2-InputOutputSystem\\data\\data.txt");
+        File chat = new File(".\\chapter2-InputOutputSystem\\data\\chat.txt");
 
         ConsoleChat consoleChat = new ConsoleChat(text, chat);
         consoleChat.startChat();
