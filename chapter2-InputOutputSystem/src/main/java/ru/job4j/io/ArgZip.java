@@ -16,9 +16,6 @@ public class ArgZip {
         for (String st : args) {
             if (st.contains("=")) {
                 String[] keyValue = st.split("=");
-                for (String string : keyValue) {
-                    System.out.println(string);
-                }
                 instructions.put(keyValue[0], keyValue[1]);
             }
         }
