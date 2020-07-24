@@ -1,3 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<checkstyle version="6.11.2">
+<checkstyle version="8.29">
+<file name="C:\projects\job4j_design\chapter2-InputOutputSystem\src\main\java\ru\job4j\io\Abuse.java">
+</file>
+<file name="C:\projects\job4j_design\chapter2-InputOutputSystem\src\main\java\ru\job4j\io\Analyse.java">
+</file>
+<file name="C:\projects\job4j_design\chapter2-InputOutputSystem\src\main\java\ru\job4j\io\ArgsName.java">
+</file>
+<file name="C:\projects\job4j_design\chapter2-InputOutputSystem\src\main\java\ru\job4j\io\ArgZip.java">
+</file>
+<file name="C:\projects\job4j_design\chapter2-InputOutputSystem\src\main\java\ru\job4j\io\Article.java">
+</file>
+<file name="C:\projects\job4j_design\chapter2-InputOutputSystem\src\main\java\ru\job4j\io\Config.java">
+</file>
+<file name="C:\projects\job4j_design\chapter2-InputOutputSystem\src\main\java\ru\job4j\io\consolechat\ConsoleChat.java">
+</file>
+<file name="C:\projects\job4j_design\chapter2-InputOutputSystem\src\main\java\ru\job4j\io\Dir.java">
+</file>
+<file name="C:\projects\job4j_design\chapter2-InputOutputSystem\src\main\java\ru\job4j\io\EvenNumberFile.java">
+</file>
+<file name="C:\projects\job4j_design\chapter2-InputOutputSystem\src\main\java\ru\job4j\io\FreezeStr.java">
+</file>
+<file name="C:\projects\job4j_design\chapter2-InputOutputSystem\src\main\java\ru\job4j\io\LogFilter.java">
+</file>
+<file name="C:\projects\job4j_design\chapter2-InputOutputSystem\src\main\java\ru\job4j\io\Matrix.java">
+</file>
+<file name="C:\projects\job4j_design\chapter2-InputOutputSystem\src\main\java\ru\job4j\io\ReadFile.java">
+</file>
+<file name="C:\projects\job4j_design\chapter2-InputOutputSystem\src\main\java\ru\job4j\io\ReadFileFileInput.java">
+</file>
+<file name="C:\projects\job4j_design\chapter2-InputOutputSystem\src\main\java\ru\job4j\io\ResultFile.java">
+</file>
+<file name="C:\projects\job4j_design\chapter2-InputOutputSystem\src\main\java\ru\job4j\io\Search.java">
+</file>
+<file name="C:\projects\job4j_design\chapter2-InputOutputSystem\src\main\java\ru\job4j\io\SearchFiles.java">
+</file>
+<file name="C:\projects\job4j_design\chapter2-InputOutputSystem\src\main\java\ru\job4j\io\socket\EchoServer.java">
+</file>
+<file name="C:\projects\job4j_design\chapter2-InputOutputSystem\src\main\java\ru\job4j\io\UsageLog4j.java">
+</file>
+<file name="C:\projects\job4j_design\chapter2-InputOutputSystem\src\main\java\ru\job4j\io\Zip.java">
+</file>
+<file name="C:\projects\job4j_design\chapter2-InputOutputSystem\src\test\java\ru\job4j\io\AbuseTest.java">
+</file>
+<file name="C:\projects\job4j_design\chapter2-InputOutputSystem\src\test\java\ru\job4j\io\AnalyseTest.java">
+</file>
+<file name="C:\projects\job4j_design\chapter2-InputOutputSystem\src\test\java\ru\job4j\io\ArgsNameTest.java">
+</file>
+<file name="C:\projects\job4j_design\chapter2-InputOutputSystem\src\test\java\ru\job4j\io\ArticleTest.java">
+</file>
+<file name="C:\projects\job4j_design\chapter2-InputOutputSystem\src\test\java\ru\job4j\io\ConfigTest.java">
+</file>
+<file name="C:\projects\job4j_design\chapter2-InputOutputSystem\src\test\java\ru\job4j\io\FreezeStrTest.java">
+</file>
+<file name="C:\projects\job4j_design\chapter2-InputOutputSystem\src\main\resources\log4j.properties">
+</file>
 </checkstyle>
