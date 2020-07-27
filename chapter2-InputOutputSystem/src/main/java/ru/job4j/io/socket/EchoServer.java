@@ -17,9 +17,6 @@ public class EchoServer {
                      BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
                     String str = in.readLine();
                     while (!str.isEmpty()) {
-                        if (str.contains("msg")) {
-                            System.out.println(str);
-                        }
                         if (str.contains("Bye")) {
                             out.write("closing server\r\n".getBytes());
                             serverWork = false;
