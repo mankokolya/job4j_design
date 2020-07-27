@@ -8,16 +8,21 @@ public class UsageLog4j {
     private static final Logger LOG = LoggerFactory.getLogger(UsageLog4j.class.getName());
 
     public static void main(String[] args) {
-        char sign = '$';
-        byte size = 8;
-        short salary = 150;
-        int age = 29;
-        long number = 123454684L;
-        float height = 1.84f;
-        double weight = 101.4;
-        boolean speakEnglish = true;
+        try {
+            char sign = '$';
 
-        LOG.debug("Char: {}, byte: {}, short: {}, int: {}, long: {}, float: {}, double: {}, boolean: {}",
-                sign, size, salary, age, number, height, weight, speakEnglish);
+            byte size = 8;
+            short salary = 150;
+            int age = 29;
+            long number = 123454684L;
+            float height = 1.84f;
+            double weight = 101.4;
+            boolean speakEnglish = true;
+
+            LOG.debug("Char: {}, byte: {}, short: {}, int: {}, long: {}, float: {}, double: {}, boolean: {}",
+                    sign, size, salary, age, number, height, weight, speakEnglish);
+        } catch (Exception e) {
+            LOG.error("Exception in log example", e);
+        }
     }
 }
