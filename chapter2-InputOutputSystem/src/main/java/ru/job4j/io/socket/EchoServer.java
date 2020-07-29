@@ -1,5 +1,8 @@
 package ru.job4j.io.socket;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -10,6 +13,8 @@ public class EchoServer {
 
     public static void main(String[] args) {
         boolean serverWork = true;
+        final Logger LOG = LoggerFactory.getLogger(EchoServer.class.getName());
+
         try (ServerSocket server = new ServerSocket(9000)) {
             while (serverWork) {
                 Socket socket = server.accept();
@@ -29,7 +34,6 @@ public class EchoServer {
                             if (str.contains("msg")) {
                                 String[] splitMsg = str.split(" ");
                                 String message = splitMsg[1].split("=")[1] + System.lineSeparator();
-                                System.out.println(message);
                                 out.write(message.getBytes());
                             }
                         }
@@ -38,7 +42,7 @@ public class EchoServer {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error("Exception in ", e);
         }
     }
 }
