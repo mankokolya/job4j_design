@@ -13,7 +13,7 @@ public class SearchFiles extends SimpleFileVisitor<Path> {
     private final Predicate<Path> predicate;
     private List<Path> filtered = new ArrayList<>();
 
-    SearchFiles(Predicate<Path> predicate) {
+    public SearchFiles(Predicate<Path> predicate) {
         this.predicate = predicate;
     }
 
