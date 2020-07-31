@@ -1,5 +1,7 @@
 package ru.job4j.io.filesearcher;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.job4j.io.SearchFiles;
 
 import java.io.*;
@@ -10,15 +12,21 @@ import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
 public class FileFinder {
-    public static void main(String[] args) throws IOException {
-        AnalyseArgs analyseArgs = new AnalyseArgs(args);
-        if (analyseArgs.valid()) {
-            Path root = Path.of(analyseArgs.directory());
-            Predicate<Path> searchPredicate = createPredicate(analyseArgs.getSearchMode(), analyseArgs.searchingCriteria());
-            SearchFiles searchFiles = new SearchFiles(searchPredicate);
-            Files.walkFileTree(root, searchFiles);
-            List<Path> files = searchFiles.getPaths();
-            writeToFile(files, new File(analyseArgs.output()));
+    private static final Logger LOG = LoggerFactory.getLogger(FileFinder.class.getName());
+
+    public static void main(String[] args) {
+        try {
+            AnalyseArgs analyseArgs = new AnalyseArgs(args);
+            if (analyseArgs.valid()) {
+                Path root = Path.of(analyseArgs.directory());
+                Predicate<Path> searchPredicate = createPredicate(analyseArgs.getSearchMode(), analyseArgs.searchingCriteria());
+                SearchFiles searchFiles = new SearchFiles(searchPredicate);
+                Files.walkFileTree(root, searchFiles);
+                List<Path> files = searchFiles.getPaths();
+                writeToFile(files, new File(analyseArgs.output()));
+            }
+        } catch (Exception e) {
+            LOG.error(e.toString());
         }
     }
 

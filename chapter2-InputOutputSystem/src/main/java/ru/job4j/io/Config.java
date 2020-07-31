@@ -43,10 +43,4 @@ public class Config {
         return out.toString();
     }
 
-    public static void main(String[] args) {
-
-        Config con = new Config("./data/data_without_comments.properties");
-        con.load();
-    }
-
 }
