@@ -37,7 +37,7 @@ public class FileFinder {
                 writer.newLine();
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error(e.toString());
         }
     }
 
