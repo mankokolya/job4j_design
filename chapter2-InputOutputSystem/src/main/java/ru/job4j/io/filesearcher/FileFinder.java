@@ -18,16 +18,19 @@ public class FileFinder {
         try {
             AnalyseArgs analyseArgs = new AnalyseArgs(args);
             if (analyseArgs.valid()) {
-                Path root = Path.of(analyseArgs.directory());
-                Predicate<Path> searchPredicate = createPredicate(analyseArgs.getSearchMode(), analyseArgs.searchingCriteria());
-                SearchFiles searchFiles = new SearchFiles(searchPredicate);
-                Files.walkFileTree(root, searchFiles);
-                List<Path> files = searchFiles.getPaths();
+                List<Path> files = getPaths(analyseArgs, Path.of(analyseArgs.directory()));
                 writeToFile(files, new File(analyseArgs.output()));
             }
         } catch (Exception e) {
             LOG.error(e.toString());
         }
+    }
+
+    private static List<Path> getPaths(AnalyseArgs analyseArgs, Path root) throws IOException {
+        Predicate<Path> searchPredicate = createPredicate(analyseArgs.getSearchMode(), analyseArgs.searchingCriteria());
+        SearchFiles searchFiles = new SearchFiles(searchPredicate);
+        Files.walkFileTree(root, searchFiles);
+        return searchFiles.getPaths();
     }
 
     private static void writeToFile(List<Path> files, File target) {
