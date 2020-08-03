@@ -7,7 +7,9 @@ import ru.job4j.io.SearchFiles;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
@@ -45,19 +47,12 @@ public class FileFinder {
     }
 
     private static Predicate<Path> createPredicate(String searchMode, String criteria) {
-        Predicate<Path> rls = null;
-        switch (searchMode) {
-            case "-m" -> {
-                Pattern mask = Pattern.compile(criteria.replace(".", "[.]")
-                        .replace("*", ".*").replace("?", "."));
-                rls = path -> mask.matcher(path.toFile().getName()).matches();
-            }
-            case "-f" -> rls = path -> path.toFile().getName().equals(criteria);
-            case "-r" -> {
-                Pattern pattern = Pattern.compile(criteria);
-                rls = path -> pattern.matcher(path.toFile().getName()).matches();
-            }
-        }
-        return rls;
+        Map<String, Predicate<Path>> rsl = new HashMap<>();
+        rsl.put("-m", path -> Pattern.compile(criteria.replace(".", "[.]")
+                .replace("*", ".*").replace("?", ".")).matcher(path.toFile().getName()).matches());
+        rsl.put("-f", path -> path.toFile().getName().equals(criteria));
+        rsl.put("-r", path -> Pattern.compile(criteria).matcher(path.toFile().getName()).matches());
+
+        return rsl.get(searchMode);
     }
 }
