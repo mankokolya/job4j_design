@@ -10,11 +10,25 @@ import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiFunction;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
 public class FileFinder {
     private static final Logger LOG = LoggerFactory.getLogger(FileFinder.class.getName());
+
+    private static Map<String, BiFunction<Path, String, Boolean>> map = Map.of(
+            "-m", (path, criteria) -> {
+                Pattern pattern = Pattern.compile(criteria
+                        .replace(".", "[.]")
+                        .replace("*", ".*")
+                        .replace("?", ".")
+                );
+                return pattern.matcher(path.toFile().getName()).matches();
+            },
+            "-f", (path, criteria) -> path.toFile().getName().equals(criteria),
+            "-r", (path, criteria) -> Pattern.compile(criteria).matcher(path.toFile().getName()).matches()
+    );
 
     public static void main(String[] args) {
         try {
@@ -47,12 +61,11 @@ public class FileFinder {
     }
 
     private static Predicate<Path> createPredicate(String searchMode, String criteria) {
-        Map<String, Predicate<Path>> rsl = new HashMap<>();
-        rsl.put("-m", path -> Pattern.compile(criteria.replace(".", "[.]")
-                .replace("*", ".*").replace("?", ".")).matcher(path.toFile().getName()).matches());
-        rsl.put("-f", path -> path.toFile().getName().equals(criteria));
-        rsl.put("-r", path -> Pattern.compile(criteria).matcher(path.toFile().getName()).matches());
-
-        return rsl.get(searchMode);
+        BiFunction<Path, String, Boolean> function = map.get(searchMode);
+        Predicate<Path> pathPredicate = path -> true;
+        if (function != null) {
+            pathPredicate = path -> function.apply(path, criteria);
+        }
+        return pathPredicate;
     }
 }
