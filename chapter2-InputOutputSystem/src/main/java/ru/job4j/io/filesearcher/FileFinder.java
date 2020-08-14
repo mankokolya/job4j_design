@@ -7,12 +7,28 @@ import ru.job4j.io.SearchFiles;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.function.BiFunction;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
 public class FileFinder {
     private static final Logger LOG = LoggerFactory.getLogger(FileFinder.class.getName());
+
+    private static Map<String, BiFunction<Path, String, Boolean>> map = Map.of(
+            "-m", (path, criteria) -> {
+                Pattern pattern = Pattern.compile(criteria
+                        .replace(".", "[.]")
+                        .replace("*", ".*")
+                        .replace("?", ".")
+                );
+                return pattern.matcher(path.toFile().getName()).matches();
+            },
+            "-f", (path, criteria) -> path.toFile().getName().equals(criteria),
+            "-r", (path, criteria) -> Pattern.compile(criteria).matcher(path.toFile().getName()).matches()
+    );
 
     public static void main(String[] args) {
         try {
@@ -45,19 +61,11 @@ public class FileFinder {
     }
 
     private static Predicate<Path> createPredicate(String searchMode, String criteria) {
-        Predicate<Path> rls = null;
-        switch (searchMode) {
-            case "-m" -> {
-                Pattern mask = Pattern.compile(criteria.replace(".", "[.]")
-                        .replace("*", ".*").replace("?", "."));
-                rls = path -> mask.matcher(path.toFile().getName()).matches();
-            }
-            case "-f" -> rls = path -> path.toFile().getName().equals(criteria);
-            case "-r" -> {
-                Pattern pattern = Pattern.compile(criteria);
-                rls = path -> pattern.matcher(path.toFile().getName()).matches();
-            }
+        BiFunction<Path, String, Boolean> function = map.get(searchMode);
+        Predicate<Path> pathPredicate = path -> true;
+        if (function != null) {
+            pathPredicate = path -> function.apply(path, criteria);
         }
-        return rls;
+        return pathPredicate;
     }
 }

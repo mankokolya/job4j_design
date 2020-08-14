@@ -1,1 +1,14 @@
-c:\projects\job4j_design\chapter1-DataStructuresAndAlgorithms\src\main\java\ru\job4j\collection\MyHashMap.java
+c:\projects\job4j_design\.idea\checkstyleidea-libs\readme.txt
+c:\projects\job4j_design\chapter2-InputOutputSystem\data\chat.txt
+c:\projects\job4j_design\chapter2-InputOutputSystem\data\data.txt
+c:\projects\job4j_design\chapter2-InputOutputSystem\data\server.txt
+c:\projects\job4j_design\chapter2-InputOutputSystem\target\surefire-reports\ru.job4j.io.AbuseTest.txt
+c:\projects\job4j_design\chapter2-InputOutputSystem\target\surefire-reports\ru.job4j.io.AnalyseTest.txt
+c:\projects\job4j_design\chapter2-InputOutputSystem\target\surefire-reports\ru.job4j.io.ArgsNameTest.txt
+c:\projects\job4j_design\chapter2-InputOutputSystem\target\surefire-reports\ru.job4j.io.ArticleTest.txt
+c:\projects\job4j_design\chapter2-InputOutputSystem\target\surefire-reports\ru.job4j.io.FreezeStrTest.txt
+c:\projects\job4j_design\even.txt
+c:\projects\job4j_design\input.txt
+c:\projects\job4j_design\log.txt
+c:\projects\job4j_design\logFiltered.txt
+c:\projects\job4j_design\result.txt
