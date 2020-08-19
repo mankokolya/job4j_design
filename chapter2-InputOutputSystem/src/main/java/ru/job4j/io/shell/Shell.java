@@ -1,19 +1,18 @@
 package ru.job4j.io.shell;
 
-
+import java.util.*;
 import java.io.File;
 import java.nio.file.Paths;
-import java.util.StringJoiner;
 
 public class Shell {
-    private final StringJoiner pathBuilder = new StringJoiner(File.separator);
+    private final List<String> pathBuilder = new LinkedList<>();
 
     public void cd(String path) {
         this.pathBuilder.add(path);
     }
 
     public String pwd() {
-        String path = pathBuilder.toString();
+        String path = String.join(File.separator, pathBuilder);
         if (!path.startsWith(File.separator)) {
             path = File.separator + path;
         }
