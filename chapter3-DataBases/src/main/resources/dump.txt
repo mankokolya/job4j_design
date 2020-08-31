@@ -1,3 +1,6 @@
 Petr Arsentev;parsentev@yandex.ru;
 Ivan Ivanov;iivanov@gmail.com;
 Manko Kolya;mankokolya@gmail.com;
+Bill Golden;golden@.gmail.com;
+;hello@.gmail.com;
+Iryna Manko/iramanko@gmail.com;

@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Properties;
 import java.util.stream.Collectors;
 
+import org.apache.commons.validator.routines.EmailValidator;
+
 public class ImportDB {
     private final Properties config;
     private final String dump;
@@ -23,9 +25,14 @@ public class ImportDB {
 
     public List<User> load() throws IOException {
         List<User> users;
+        EmailValidator validator = EmailValidator.getInstance();
+        String regex = "[;/]";
+
         try (BufferedReader reader = new BufferedReader(new FileReader(dump))) {
             users = reader.lines()
-                    .map(line -> new User(line.split(";")[0], line.split(";")[1]))
+                    .map(line -> line.split(regex))
+                    .filter(line -> line.length >= 2 && validator.isValid(line[1]))
+                    .map(line -> new User(line[0], line[1]))
                     .collect(Collectors.toList());
         }
         return users;
