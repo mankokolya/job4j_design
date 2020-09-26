@@ -7,16 +7,28 @@ import java.util.function.Function;
 public class SoftReferenceCache<K, V> {
     private final HashMap<K, SoftReference<V>> cache = new HashMap<>();
 
-    public void put(K key, Function<K, V> getValue) {
-        cache.put(key, new SoftReference<>(getValue.apply(key)));
+    public void put(K key, V val) {
+        cache.put(key, new SoftReference<>(val));
     }
 
     public V get(K key, Function<K, V> getValue) {
-        SoftReference<V> reference = cache.get(key);
-        if (reference != null) {
-            return reference.get();
+        boolean containsKey = cache.containsKey(key);
+            return containsKey ? getContainsKeyTrue(key, getValue) : getContainsKeyFalse(key, getValue);
+    }
+
+    private V getContainsKeyFalse(K key, Function<K, V> getValue) {
+        V val = getValue.apply(key);
+        this.put(key, val);
+        return val;
+    }
+
+    private V getContainsKeyTrue(K key, Function<K, V> getValue) {
+        V v = cache.get(key).get();
+        if (v != null) {
+            return v;
         }
-        this.put(key, getValue);
-        return this.cache.get(key).get();
+        v = getValue.apply(key);
+        this.put(key, v);
+        return v;
     }
 }
