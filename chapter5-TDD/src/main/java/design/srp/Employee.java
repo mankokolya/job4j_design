@@ -1,15 +1,18 @@
 package design.srp;
 
-import java.util.Calendar;
+import java.time.LocalDate;
 import java.util.Objects;
 
-public class Employer {
+/**
+ * This class holds information about employees.
+ */
+public class Employee {
     private String name;
-    private Calendar hired;
-    private Calendar fired;
+    private LocalDate hired;
+    private LocalDate fired;
     private double salary;
 
-    public Employer(String name, Calendar hired, Calendar fires, double salary) {
+    public Employee(String name, LocalDate hired, LocalDate fires, double salary) {
         this.name = name;
         this.hired = hired;
         this.fired = fires;
@@ -20,11 +23,11 @@ public class Employer {
         return name;
     }
 
-    public Calendar getHired() {
+    public LocalDate getHired() {
         return hired;
     }
 
-    public Calendar getFired() {
+    public LocalDate getFired() {
         return fired;
     }
 
@@ -40,8 +43,8 @@ public class Employer {
         if (obj == null || getClass() != obj.getClass()) {
             return false;
         }
-        Employer employer = (Employer) obj;
-        return Objects.equals(name, employer.name);
+        Employee employee = (Employee) obj;
+        return Objects.equals(name, employee.name);
     }
 
     @Override
