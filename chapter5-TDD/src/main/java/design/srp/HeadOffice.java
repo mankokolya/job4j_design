@@ -10,14 +10,14 @@ public class HeadOffice {
     /**
      * Used to add to the report all the necessary information. Includes title by default.
      */
-    private static StringBuilder build = new StringBuilder()
+    private StringBuilder build = new StringBuilder()
             .append("Name; Hired; Fired; Salary;")
             .append(System.lineSeparator());
 
     /**
      * This function is used to retrieve all the necessary data from the database.
      */
-    public static Function<List<Employee>, String> getReport = worker -> {
+    public Function<List<Employee>, String> getReport = worker -> {
         worker.forEach(employee -> build.append(employee.getName()).append(";")
                 .append(employee.getHired()).append(";")
                 .append(employee.getFired()).append(";")
