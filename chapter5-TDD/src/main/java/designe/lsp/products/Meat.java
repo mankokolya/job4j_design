@@ -1,4 +1,4 @@
-package design.lsp.products;
+package designe.lsp.products;
 
 import java.time.LocalDate;
 

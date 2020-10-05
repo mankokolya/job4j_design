@@ -1,4 +1,4 @@
-package design.srp;
+package designe.srp;
 
 import java.util.ArrayList;
 import java.util.List;

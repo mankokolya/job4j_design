@@ -1,14 +1,12 @@
-package design.srp;
-
-import org.apache.commons.text.StringEscapeUtils;
+package designe.srp;
 
 import java.util.List;
 import java.util.function.Function;
 
 /**
- * BookkeeperDepartment was designed to hold all information about bookkeepers' department.
+ * HeadOffice was designed to hold all information about head office.
  */
-public class BookkeeperDepartment {
+public class HeadOffice {
     /**
      * Used to add to the report all the necessary information. Includes title by default.
      */
@@ -17,14 +15,14 @@ public class BookkeeperDepartment {
             .append(System.lineSeparator());
 
     /**
-     * This function is used to retrieve necessary data from the database.
+     * This function is used to retrieve all the necessary data from the database.
      */
     public Function<List<Employee>, String> getReport = worker -> {
         worker.forEach(employee -> build.append(employee.getName()).append(";")
                 .append(employee.getHired()).append(";")
                 .append(employee.getFired()).append(";")
-                .append(employee.getSalary() / 28).append(";") //returns the salary in dollars;
+                .append(employee.getSalary()).append(";")
                 .append(System.lineSeparator()));
-        return StringEscapeUtils.escapeHtml4(build.toString());
+        return build.toString();
     };
 }

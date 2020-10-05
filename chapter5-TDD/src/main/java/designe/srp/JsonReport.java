@@ -1,31 +1,29 @@
-package design.srp;
+package designe.srp;
+
+import org.apache.commons.text.StringEscapeUtils;
 
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-/**
- * This class is created to generate a report about objects stored in the database
- * on the base of provided filters and functions.
- */
-public class StandardReport implements Report {
+public class JsonReport implements Report {
     /**
      * store - is used to store objects;
      */
     private Store store;
 
-    public StandardReport(Store store) {
+    public JsonReport(Store store) {
         this.store = store;
     }
-
     /**
-     * This method is used to generate report.
+     * This method is used to generate report in JSON format.
      * @param filter - filters the data in the database.
      * @param getReport - function to generate the report necessary for the specified department.
-     * @return - return ready report.
+     * @return - returns ready report in JSON format.
      */
     @Override
     public String generate(Predicate<Employee> filter, Function<List<Employee>, String> getReport) {
-        return getReport.apply(store.findBy(filter));
+        return StringEscapeUtils.escapeJson(getReport.apply(store.findBy(filter)));
     }
+
 }

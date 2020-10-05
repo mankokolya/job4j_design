@@ -1,4 +1,4 @@
-package design.srp;
+package designe.srp;
 
 import java.time.LocalDate;
 import java.util.Objects;

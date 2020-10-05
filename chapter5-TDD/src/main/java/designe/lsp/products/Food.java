@@ -1,12 +1,13 @@
-package design.lsp.products;
+package designe.lsp.products;
 
 import java.time.LocalDate;
 
 public class Food {
-    private String name;
-    private LocalDate expireDate;
-    private LocalDate createDate;
-    private double price;
+    private final String name;
+    private final LocalDate expireDate;
+    private final LocalDate createDate;
+    private final double price;
+
     private int discount;
 
 
@@ -20,6 +21,7 @@ public class Food {
     public void setDiscount(int discount) {
         if (discount >= 0 && discount <= 100) {
             this.discount = discount;
+            return;
         }
         throw new IllegalArgumentException("Wrong value for sale parameter!!!");
     }
@@ -32,8 +34,8 @@ public class Food {
         return createDate;
     }
 
-    public double getPrice() {
-        return price;
+    public int getDiscount() {
+        return discount;
     }
 
     @Override
