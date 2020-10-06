@@ -1,5 +1,6 @@
 package designe.lsp;
 
+import designe.lsp.benchlife.IBenchLife;
 import designe.lsp.products.Food;
 
 import java.util.List;
@@ -11,9 +12,9 @@ public class ControlQuality {
         this.dispatcher = dispatcher;
     }
 
-    public void controlFood(List<Food> foods) {
+    public void controlFood(List<Food> foods, IBenchLife benchLife) {
         for (Food food : foods) {
-            dispatcher.access(food);
+            dispatcher.store(food, benchLife);
         }
     }
 }

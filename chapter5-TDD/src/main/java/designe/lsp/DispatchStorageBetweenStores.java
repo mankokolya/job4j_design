@@ -1,6 +1,6 @@
 package designe.lsp;
 
-import designe.lsp.benchlife.BenchLife;
+import designe.lsp.benchlife.IBenchLife;
 import designe.lsp.products.Food;
 import designe.lsp.store.IStore;
 
@@ -30,16 +30,8 @@ public class DispatchStorageBetweenStores {
         );
 
         this.storesDistribution.put(
-                integer -> integer >= 25 && integer < 75,
+                integer -> integer >= 25 && integer < 90,
                 shop::add
-        );
-
-        this.storesDistribution.put(
-                integer -> integer >= 75 && integer < 90,
-                food -> {
-                    food.setDiscount(new BenchLife().calculateBenchLife(food.getCreateDate(), food.getExpireDate()));
-                    shop.add(food);
-                }
         );
 
         this.storesDistribution.put(
@@ -51,8 +43,9 @@ public class DispatchStorageBetweenStores {
 
     /**
      * Load food and predict.
+     *
      * @param predict Predict.
-     * @param store IStore.
+     * @param store   IStore.
      */
     public void load(Function<Integer, Boolean> predict, Consumer<Food> store) {
         this.storesDistribution.put(predict, store);
@@ -60,12 +53,16 @@ public class DispatchStorageBetweenStores {
 
     /**
      * Check to what store the food must go.
+     *
      * @param food Food
      */
-    public void access(Food food) {
+    public void store(Food food, IBenchLife benchLife) {
         for (Function<Integer, Boolean> predict : this.storesDistribution.keySet()) {
-            if (predict.apply(new BenchLife().calculateBenchLife(food.getCreateDate(), food.getExpireDate()))) {
-                System.out.println(new BenchLife().calculateBenchLife(food.getCreateDate(), food.getExpireDate()));
+            int benchLifeUsed = benchLife.calculateBenchLife(food.getCreateDate(), food.getExpireDate());
+            if (benchLifeUsed >= 75 && benchLifeUsed < 90) {
+                food.setDiscount(benchLifeUsed);
+            }
+            if (predict.apply(benchLifeUsed)) {
                 this.storesDistribution.get(predict).accept(food);
                 return;
             }

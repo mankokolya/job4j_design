@@ -1,5 +1,7 @@
 package designe.lsp;
 
+import designe.lsp.benchlife.BenchLifeTest;
+import designe.lsp.benchlife.IBenchLife;
 import designe.lsp.products.Bread;
 import designe.lsp.products.Food;
 import designe.lsp.products.Meat;
@@ -25,14 +27,17 @@ public class ControlQualityTest {
         IStore trash = new Trash();
         DispatchStorageBetweenStores dispatcher = new DispatchStorageBetweenStores(shop, wareHouse, trash).init();
         ControlQuality quality = new ControlQuality(dispatcher);
+        IBenchLife benchLife = new BenchLifeTest();
 
-        Food bread = new Bread("White Bread", LocalDate.now().plusDays(2), LocalDate.now(), 25);
-        Food meat = new Meat("Pork Fillet", LocalDate.now().plusDays(5), LocalDate.now(), 120);
+        Food bread = new Bread("White Bread", LocalDate.of(2020, 10, 7),
+                LocalDate.of(2020, 10, 5), 25);
+        Food meat = new Meat("Pork Fillet", LocalDate.of(2020, 10, 10),
+                LocalDate.of(2020, 10, 5), 120);
         List<Food> foods = new ArrayList<>();
         foods.add(bread);
         foods.add(meat);
 
-        quality.controlFood(foods);
+        quality.controlFood(foods, benchLife);
         assertThat(wareHouse.getAll().size(), is(2));
         assertThat(trash.getAll().size(), is(0));
         assertThat(shop.getAll().size(), is(0));
@@ -45,14 +50,17 @@ public class ControlQualityTest {
         IStore trash = new Trash();
         DispatchStorageBetweenStores dispatcher = new DispatchStorageBetweenStores(shop, wareHouse, trash).init();
         ControlQuality quality = new ControlQuality(dispatcher);
+        IBenchLife benchLife = new BenchLifeTest();
 
-        Food bread = new Bread("White Bread", LocalDate.now().plusDays(2), LocalDate.now().minusDays(1), 25);
-        Food meat = new Meat("Pork Fillet", LocalDate.now().plusDays(5), LocalDate.now().minusDays(2), 120);
+        Food bread = new Bread("White Bread", LocalDate.of(2020, 10, 7),
+                LocalDate.of(2020,10,4), 25);
+        Food meat = new Meat("Pork Fillet", LocalDate.of(2020, 10, 10),
+                LocalDate.of(2020, 10, 3), 120);
         List<Food> foods = new ArrayList<>();
         foods.add(bread);
         foods.add(meat);
 
-        quality.controlFood(foods);
+        quality.controlFood(foods, benchLife);
         assertThat(shop.getAll().size(), is(2));
         assertThat(wareHouse.getAll().size(), is(0));
         assertThat(trash.getAll().size(), is(0));
@@ -65,21 +73,24 @@ public class ControlQualityTest {
         IStore trash = new Trash();
         DispatchStorageBetweenStores dispatcher = new DispatchStorageBetweenStores(shop, wareHouse, trash).init();
         ControlQuality quality = new ControlQuality(dispatcher);
+        IBenchLife benchLife = new BenchLifeTest();
 
-        Food bread = new Bread("White Bread", LocalDate.now().plusDays(1), LocalDate.now().minusDays(4), 25);
-        Food meat = new Meat("Pork Fillet", LocalDate.now().plusDays(1), LocalDate.now().minusDays(9), 120);
+        Food bread = new Bread("White Bread", LocalDate.of(2020,10,6),
+                LocalDate.of(2020,10,1), 25);
+        Food meat = new Meat("Pork Fillet", LocalDate.of(2020, 10, 6),
+                LocalDate.of(2020, 9, 30), 120);
         List<Food> foods = new ArrayList<>();
         foods.add(bread);
         foods.add(meat);
 
-        quality.controlFood(foods);
+        quality.controlFood(foods, benchLife);
         List<Food> foodList = shop.getAll();
         Food food1 = foodList.get(0);
         Food food2 = foodList.get(1);
 
         assertThat(foodList.size(), is(2));
         assertThat(food1.getDiscount(), is(80));
-        assertThat(food2.getDiscount(), is(90));
+        assertThat(food2.getDiscount(), is(83));
         assertThat(wareHouse.getAll().size(), is(0));
         assertThat(trash.getAll().size(), is(0));
     }
@@ -91,19 +102,20 @@ public class ControlQualityTest {
         IStore trash = new Trash();
         DispatchStorageBetweenStores dispatcher = new DispatchStorageBetweenStores(shop, wareHouse, trash).init();
         ControlQuality quality = new ControlQuality(dispatcher);
+        IBenchLife benchLife = new BenchLifeTest();
 
-        Food bread = new Bread("White Bread", LocalDate.now().plusDays(1), LocalDate.now().minusDays(13), 25);
-        Food meat = new Meat("Pork Fillet", LocalDate.now().plusDays(1), LocalDate.now().minusDays(17), 120);
+        Food bread = new Bread("White Bread", LocalDate.of(2020,10,6),
+                LocalDate.of(2020,10,22), 25);
+        Food meat = new Meat("Pork Fillet", LocalDate.of(2020,10,6),
+                LocalDate.of(2020, 10, 18), 120);
         List<Food> foods = new ArrayList<>();
         foods.add(bread);
         foods.add(meat);
 
-        quality.controlFood(foods);
+        quality.controlFood(foods, benchLife);
 
         assertThat(shop.getAll().size(), is(0));
         assertThat(wareHouse.getAll().size(), is(0));
         assertThat(trash.getAll().size(), is(2));
     }
-
-
 }
