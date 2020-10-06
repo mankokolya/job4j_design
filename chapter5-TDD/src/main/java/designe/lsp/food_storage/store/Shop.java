@@ -1,12 +1,12 @@
-package designe.lsp.store;
+package designe.lsp.food_storage.store;
 
-import designe.lsp.products.Food;
+import designe.lsp.food_storage.products.Food;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Warehouse implements IStore {
+public class Shop implements IStore {
     List<Food> foodList = new ArrayList<>();
 
     @Override
@@ -18,4 +18,5 @@ public class Warehouse implements IStore {
     public List<Food> getAll() {
         return Collections.unmodifiableList(foodList);
     }
+
 }

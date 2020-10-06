@@ -1,6 +1,6 @@
-package designe.lsp.store;
+package designe.lsp.food_storage.store;
 
-import designe.lsp.products.Food;
+import designe.lsp.food_storage.products.Food;
 
 import java.util.List;
 

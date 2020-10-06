@@ -1,14 +1,16 @@
 package designe.lsp;
 
-import designe.lsp.benchlife.BenchLifeTest;
-import designe.lsp.benchlife.IBenchLife;
-import designe.lsp.products.Bread;
-import designe.lsp.products.Food;
-import designe.lsp.products.Meat;
-import designe.lsp.store.IStore;
-import designe.lsp.store.Shop;
-import designe.lsp.store.Trash;
-import designe.lsp.store.Warehouse;
+import designe.lsp.food_storage.ControlQuality;
+import designe.lsp.food_storage.DispatchStorageBetweenStores;
+import designe.lsp.food_storage.benchlife.BenchLifeTest;
+import designe.lsp.food_storage.benchlife.IBenchLife;
+import designe.lsp.food_storage.products.Bread;
+import designe.lsp.food_storage.products.Food;
+import designe.lsp.food_storage.products.Meat;
+import designe.lsp.food_storage.store.IStore;
+import designe.lsp.food_storage.store.Shop;
+import designe.lsp.food_storage.store.Trash;
+import designe.lsp.food_storage.store.Warehouse;
 import org.junit.Test;
 
 import java.time.LocalDate;
@@ -53,7 +55,7 @@ public class ControlQualityTest {
         IBenchLife benchLife = new BenchLifeTest();
 
         Food bread = new Bread("White Bread", LocalDate.of(2020, 10, 7),
-                LocalDate.of(2020,10,4), 25);
+                LocalDate.of(2020, 10, 4), 25);
         Food meat = new Meat("Pork Fillet", LocalDate.of(2020, 10, 10),
                 LocalDate.of(2020, 10, 3), 120);
         List<Food> foods = new ArrayList<>();
@@ -75,8 +77,8 @@ public class ControlQualityTest {
         ControlQuality quality = new ControlQuality(dispatcher);
         IBenchLife benchLife = new BenchLifeTest();
 
-        Food bread = new Bread("White Bread", LocalDate.of(2020,10,6),
-                LocalDate.of(2020,10,1), 25);
+        Food bread = new Bread("White Bread", LocalDate.of(2020, 10, 6),
+                LocalDate.of(2020, 10, 1), 25);
         Food meat = new Meat("Pork Fillet", LocalDate.of(2020, 10, 6),
                 LocalDate.of(2020, 9, 30), 120);
         List<Food> foods = new ArrayList<>();
@@ -104,9 +106,9 @@ public class ControlQualityTest {
         ControlQuality quality = new ControlQuality(dispatcher);
         IBenchLife benchLife = new BenchLifeTest();
 
-        Food bread = new Bread("White Bread", LocalDate.of(2020,10,6),
-                LocalDate.of(2020,10,22), 25);
-        Food meat = new Meat("Pork Fillet", LocalDate.of(2020,10,6),
+        Food bread = new Bread("White Bread", LocalDate.of(2020, 10, 6),
+                LocalDate.of(2020, 10, 22), 25);
+        Food meat = new Meat("Pork Fillet", LocalDate.of(2020, 10, 6),
                 LocalDate.of(2020, 10, 18), 120);
         List<Food> foods = new ArrayList<>();
         foods.add(bread);

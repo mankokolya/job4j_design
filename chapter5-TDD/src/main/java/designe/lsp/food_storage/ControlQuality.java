@@ -1,7 +1,7 @@
-package designe.lsp;
+package designe.lsp.food_storage;
 
-import designe.lsp.benchlife.IBenchLife;
-import designe.lsp.products.Food;
+import designe.lsp.food_storage.benchlife.IBenchLife;
+import designe.lsp.food_storage.products.Food;
 
 import java.util.List;
 
