@@ -14,7 +14,11 @@ public class ControlQuality {
 
     public void controlFood(List<Food> foods, IBenchLife benchLife) {
         for (Food food : foods) {
-            dispatcher.store(food, benchLife);
+            int benchLifeUsed = benchLife.calculateBenchLife(food.getCreateDate(), food.getExpireDate());
+            if (benchLifeUsed >= 75 && benchLifeUsed < 90) {
+                food.setDiscount(benchLifeUsed);
+            }
+            dispatcher.store(food, benchLifeUsed);
         }
     }
 }

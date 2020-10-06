@@ -1,6 +1,5 @@
 package designe.lsp.food_storage;
 
-import designe.lsp.food_storage.benchlife.IBenchLife;
 import designe.lsp.food_storage.products.Food;
 import designe.lsp.food_storage.store.IStore;
 
@@ -56,12 +55,9 @@ public class DispatchStorageBetweenStores {
      *
      * @param food Food
      */
-    public void store(Food food, IBenchLife benchLife) {
+    public void store(Food food, int benchLifeUsed) {
         for (Function<Integer, Boolean> predict : this.storesDistribution.keySet()) {
-            int benchLifeUsed = benchLife.calculateBenchLife(food.getCreateDate(), food.getExpireDate());
-            if (benchLifeUsed >= 75 && benchLifeUsed < 90) {
-                food.setDiscount(benchLifeUsed);
-            }
+
             if (predict.apply(benchLifeUsed)) {
                 this.storesDistribution.get(predict).accept(food);
                 return;
