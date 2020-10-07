@@ -4,13 +4,17 @@ import java.util.Objects;
 
 public abstract class Transport {
     private final String registrationNumber;
-    private String category;
+    private int parkingSize = 1;
 
-    protected Transport(String registrationNumber, String category) {
+    protected Transport(String registrationNumber) {
         this.registrationNumber = registrationNumber;
-        this.category = category;
+    }
+    protected Transport(String registrationNumber, int parkingSize) {
+        this.registrationNumber = registrationNumber;
+        this.parkingSize = parkingSize;
     }
 
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
@@ -22,12 +26,12 @@ public abstract class Transport {
         return registrationNumber.equals(vehicle.registrationNumber);
     }
 
-
+    @Override
     public int hashCode() {
         return Objects.hash(registrationNumber);
     }
 
-    public String getCategory() {
-        return category;
+    public int getSize() {
+        return parkingSize;
     }
 }

@@ -6,4 +6,5 @@ public interface Parking {
     int park(Transport car);
     int find(Transport car);
     boolean accept(Transport transport);
+    int hasFreeSpace(Transport transport);
 }
