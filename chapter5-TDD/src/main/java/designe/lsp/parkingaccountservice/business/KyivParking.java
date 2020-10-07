@@ -1,7 +1,7 @@
-package designe.lsp.parking_account_service.business;
+package designe.lsp.parkingaccountservice.business;
 
-import designe.lsp.parking_account_service.parking.IParking;
-import designe.lsp.parking_account_service.transport.ITransport;
+import designe.lsp.parkingaccountservice.parking.IParking;
+import designe.lsp.parkingaccountservice.transport.ITransport;
 
 
 public class KyivParking implements ParkingBusiness {

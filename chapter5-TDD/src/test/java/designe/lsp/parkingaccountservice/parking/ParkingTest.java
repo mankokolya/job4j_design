@@ -1,8 +1,8 @@
-package designe.lsp.parking_account_service.parking;
+package designe.lsp.parkingaccountservice.parking;
 
-import designe.lsp.parking_account_service.transport.Car;
-import designe.lsp.parking_account_service.transport.ITransport;
-import designe.lsp.parking_account_service.transport.Truck;
+import designe.lsp.parkingaccountservice.transport.Car;
+import designe.lsp.parkingaccountservice.transport.ITransport;
+import designe.lsp.parkingaccountservice.transport.Truck;
 import org.junit.Test;
 
 import static org.junit.Assert.assertFalse;

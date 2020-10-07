@@ -1,4 +1,4 @@
-package designe.lsp.parking_account_service.transport;
+package designe.lsp.parkingaccountservice.transport;
 
 
 public class Truck extends Transport implements ITransport {

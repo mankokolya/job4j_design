@@ -1,6 +1,6 @@
-package designe.lsp.parking_account_service.parking;
+package designe.lsp.parkingaccountservice.parking;
 
-import designe.lsp.parking_account_service.transport.ITransport;
+import designe.lsp.parkingaccountservice.transport.ITransport;
 
 public class TruckParking implements IParking {
     private ITransport[] truckParking;
