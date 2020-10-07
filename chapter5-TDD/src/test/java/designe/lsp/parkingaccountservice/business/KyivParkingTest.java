@@ -1,21 +1,22 @@
 package designe.lsp.parkingaccountservice.business;
 
 import designe.lsp.parkingaccountservice.parking.CarParking;
-import designe.lsp.parkingaccountservice.parking.IParking;
+import designe.lsp.parkingaccountservice.businness.KievParking;
+import designe.lsp.parkingaccountservice.parking.Parking;
 import designe.lsp.parkingaccountservice.parking.TruckParking;
 import designe.lsp.parkingaccountservice.transport.Car;
-import designe.lsp.parkingaccountservice.transport.ITransport;
+import designe.lsp.parkingaccountservice.transport.Transport;
 import org.junit.Test;
 
 public class KyivParkingTest {
 
     @Test
     public void createKyivParking() {
-        IParking carParking = new CarParking(5);
-        IParking truckParking = new TruckParking(2);
-        ITransport car = new Car("DS5478ER");
-        ParkingBusiness kyivParking = new KyivParking(carParking, truckParking);
-        kyivParking.parkTransport(car);
+        Parking carParking = new CarParking(5);
+        Parking truckParking = new TruckParking(2);
+        Transport car = new Car("DS5478ER", "B");
+        KievParking kyivParking = new KievParking(carParking, truckParking);
+        kyivParking.setParkingLot(car);
     }
 
 }

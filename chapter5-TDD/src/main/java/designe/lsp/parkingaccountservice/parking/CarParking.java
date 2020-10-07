@@ -1,31 +1,22 @@
 package designe.lsp.parkingaccountservice.parking;
 
-import designe.lsp.parkingaccountservice.transport.ITransport;
+import designe.lsp.parkingaccountservice.transport.Transport;
 
-public class CarParking implements IParking {
-    private ITransport[] carParking;
-    private int nexFreeSpot = 0;
+public class CarParking extends ParkingModel {
 
-    public CarParking(int carParkingSize) {
-        this.carParking = new ITransport[carParkingSize];
+    public CarParking(int size) {
+        super(size);
     }
 
     @Override
-    public boolean park(ITransport car) {
-        if (nexFreeSpot < carParking.length) {
-            carParking[nexFreeSpot++] = car;
-            return true;
-        }
-        return false;
-    }
+    public boolean accept(Transport transport) {
+        return transport.getCategory().equals("B") || transport.getCategory().equals("C");
+     }
 
     @Override
-    public int find(ITransport car) {
-        for (int i = 0; i < carParking.length; i++) {
-            if (car.equals(carParking[i])) {
-                return i;
-            }
-        }
-        return -1;
+    public int hasFreeSpace(Transport transport) {
+        return 0;
     }
+
+
 }
