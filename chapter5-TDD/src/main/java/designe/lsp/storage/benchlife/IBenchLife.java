@@ -1,4 +1,4 @@
-package designe.lsp.food_storage.benchlife;
+package designe.lsp.storage.benchlife;
 
 import java.time.LocalDate;
 
