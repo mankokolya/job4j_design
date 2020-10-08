@@ -17,15 +17,16 @@ public class CarParking extends ParkingModel {
 
     @Override
     public int hasFreeSpace(Transport transport) {
-        List<Transport> parkingInfo = info();
-        int index = -1;
-        if (transport.getSize() == 1) {
-            index = spaceForCar(parkingInfo);
-        } else if (transport.getSize() == 4) {
-            int startPosition = spaceForCar(parkingInfo);
-            index = spaceForTruck(parkingInfo, transport.getSize(), startPosition);
+        int index = super.hasFreeSpace(transport);
+        if (transport.getSize() == 4) {
+            index = spaceForTruck(super.info(), transport.getSize(), index);
         }
         return index;
+    }
+
+    @Override
+    public int park(Transport transport) {
+        return transport.getSize() == 1 ? super.park(transport) : super.parkOverSize(transport);
     }
 
     private int spaceForTruck(List<Transport> parkingInfo,  int size, int startPosition) {
@@ -33,19 +34,9 @@ public class CarParking extends ParkingModel {
         for (int i = startPosition + 1; i < startPosition + size; i++) {
             if (parkingInfo.get(i) != null) {
                 index = -1;
-            }
-        }
-        return index;
-    }
-
-    private int spaceForCar(List<Transport> transports) {
-        int index = -1;
-        for (int i = 0; i < transports.size(); i++) {
-            if (transports.get(i) == null) {
-                index = i;
                 break;
             }
         }
-        return  index;
+        return index;
     }
 }

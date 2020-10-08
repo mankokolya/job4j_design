@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public abstract class ParkingModel implements Parking{
+public abstract class ParkingModel implements Parking {
     private List<Transport> parking;
 
     public ParkingModel(int size) {
@@ -18,10 +18,19 @@ public abstract class ParkingModel implements Parking{
     public int park(Transport transport) {
         int parkingIndex = hasFreeSpace(transport);
         if (parkingIndex > -1) {
-            for (int i = parkingIndex; i < parkingIndex + transport.getSize(); i++) {
-                parking.add(i, transport);
+            parking.set(parkingIndex, transport);
+        }
+        return parkingIndex;
+    }
+
+    @Override
+    public int parkOverSize(Transport transport) {
+        int parkingIndex = hasFreeSpace(transport);
+        if (parkingIndex > -1) {
+            int lastOccupiedIndex = parkingIndex + transport.getSize();
+            for (int i = parkingIndex; i < lastOccupiedIndex; i++) {
+                parking.set(i, transport);
             }
-            return parkingIndex;
         }
         return parkingIndex;
     }
@@ -30,6 +39,17 @@ public abstract class ParkingModel implements Parking{
     public int find(Transport transport) {
         for (int i = 0; i < parking.size(); i++) {
             if (transport.equals(parking.get(i))) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    @Override
+    public int hasFreeSpace(Transport transport) {
+        List<Transport> parkingInfo = info();
+        for (int i = 0; i < parkingInfo.size(); i++) {
+            if (parkingInfo.get(i) == null) {
                 return i;
             }
         }
