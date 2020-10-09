@@ -3,7 +3,7 @@ package designe.lsp.parkingaccountservice.transport;
 import java.util.Objects;
 
 public abstract class Transport {
-    private final String registrationNumber;
+    private String registrationNumber = null;
     private int parkingSize = 1;
 
     protected Transport(String registrationNumber) {
@@ -12,6 +12,9 @@ public abstract class Transport {
     protected Transport(String registrationNumber, int parkingSize) {
         this.registrationNumber = registrationNumber;
         this.parkingSize = parkingSize;
+    }
+    protected Transport() {
+
     }
 
     @Override
@@ -33,5 +36,9 @@ public abstract class Transport {
 
     public int getSize() {
         return parkingSize;
+    }
+
+    public String getRegistrationNumber() {
+        return registrationNumber;
     }
 }

@@ -2,23 +2,21 @@ package designe.lsp.parkingaccountservice.parking;
 
 import designe.lsp.parkingaccountservice.transport.Transport;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 public abstract class ParkingModel implements Parking {
-    private List<Transport> parking;
+    private List<Transport> transports;
 
-    public ParkingModel(int size) {
-        this.parking = new ArrayList<>(Collections.nCopies(size, null));
+    public ParkingModel(List<Transport> transports) {
+        this.transports = transports;
     }
 
     @Override
     public int park(Transport transport) {
         int parkingIndex = hasFreeSpace(transport);
         if (parkingIndex > -1) {
-            parking.set(parkingIndex, transport);
+            transports.set(parkingIndex, transport);
         }
         return parkingIndex;
     }
@@ -29,7 +27,7 @@ public abstract class ParkingModel implements Parking {
         if (parkingIndex > -1) {
             int lastOccupiedIndex = parkingIndex + transport.getSize();
             for (int i = parkingIndex; i < lastOccupiedIndex; i++) {
-                parking.set(i, transport);
+                transports.set(i, transport);
             }
         }
         return parkingIndex;
@@ -37,19 +35,14 @@ public abstract class ParkingModel implements Parking {
 
     @Override
     public int find(Transport transport) {
-        for (int i = 0; i < parking.size(); i++) {
-            if (transport.equals(parking.get(i))) {
-                return i;
-            }
-        }
-        return -1;
+        return this.transports.indexOf(transport);
     }
 
     @Override
     public int hasFreeSpace(Transport transport) {
         List<Transport> parkingInfo = info();
         for (int i = 0; i < parkingInfo.size(); i++) {
-            if (parkingInfo.get(i) == null) {
+            if (parkingInfo.get(i).getRegistrationNumber() == null) {
                 return i;
             }
         }
@@ -57,6 +50,6 @@ public abstract class ParkingModel implements Parking {
     }
 
     public List<Transport> info() {
-        return Collections.unmodifiableList(parking);
+        return Collections.unmodifiableList(transports);
     }
 }

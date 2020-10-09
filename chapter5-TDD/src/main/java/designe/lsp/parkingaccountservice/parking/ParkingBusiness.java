@@ -3,11 +3,12 @@ package designe.lsp.parkingaccountservice.parking;
 import designe.lsp.parkingaccountservice.transport.Transport;
 
 import java.util.List;
+import java.util.stream.IntStream;
 
-public class CarParking extends ParkingModel {
+public class ParkingBusiness extends ParkingModel {
 
-    public CarParking(int size) {
-        super(size);
+    public ParkingBusiness(List<Transport> transports) {
+        super(transports);
     }
 
     @Override
@@ -18,7 +19,7 @@ public class CarParking extends ParkingModel {
     @Override
     public int hasFreeSpace(Transport transport) {
         int index = super.hasFreeSpace(transport);
-        if (transport.getSize() == 4) {
+        if (index < 0 && transport.getSize() == 4) {
             index = spaceForTruck(super.info(), transport.getSize(), index);
         }
         return index;
@@ -31,6 +32,9 @@ public class CarParking extends ParkingModel {
 
     private int spaceForTruck(List<Transport> parkingInfo,  int size, int startPosition) {
         int index = startPosition;
+
+        IntStream.range(startPosition + 1, startPosition + size)
+                .
         for (int i = startPosition + 1; i < startPosition + size; i++) {
             if (parkingInfo.get(i) != null) {
                 index = -1;
