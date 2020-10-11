@@ -8,6 +8,6 @@ public class Truck extends Transport {
     }
 
     public Truck() {
-
+        super("", 4);
     }
 }

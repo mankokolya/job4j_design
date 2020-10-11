@@ -1,5 +1,7 @@
 package designe.lsp.parkingaccountservice.parking;
 
+import designe.lsp.parkingaccountservice.search.Search;
+import designe.lsp.parkingaccountservice.search.SearchFreeParking;
 import designe.lsp.parkingaccountservice.transport.Car;
 import designe.lsp.parkingaccountservice.transport.Transport;
 import designe.lsp.parkingaccountservice.transport.Truck;
@@ -20,7 +22,8 @@ public class ParkingTest {
         List<Transport> spaceForCars = new ArrayList<>(Collections.nCopies(5, new Car()));
         List<Transport> spaceForTruck = new ArrayList<>(Collections.nCopies(5, new Truck()));
         List<Transport> parkingSpace = Stream.concat(spaceForCars.stream(), spaceForTruck.stream()).collect(Collectors.toList());
-        Parking parking = new ParkingBusiness(parkingSpace);
+        Search searcher = new SearchFreeParking();
+        Parking parking = new ParkingBusiness(parkingSpace, searcher);
     }
 
     @Test
@@ -28,44 +31,63 @@ public class ParkingTest {
         List<Transport> spaceForCars = new ArrayList<>(Collections.nCopies(5, new Car()));
         List<Transport> spaceForTruck = new ArrayList<>(Collections.nCopies(5, new Truck()));
         List<Transport> parkingSpace = Stream.concat(spaceForCars.stream(), spaceForTruck.stream()).collect(Collectors.toList());
-        Parking parking = new ParkingBusiness(parkingSpace);
+        Search searcher = new SearchFreeParking();
+        Parking parking = new ParkingBusiness(parkingSpace, searcher);
         Transport car = new Car("DF2542DC");
-        assertTrue(parking.park(car) > -1);
-        assertTrue(parking.find(car) > -1);
+        assertTrue(parking.allocateSpace(car) > -1);
+        assertTrue(searcher.find(car, parking.getParkingSchema()) > -1);
     }
-//
-//    @Test
-//    public void parkCarWhenFullCarParking() {
-//        Parking parking = new ParkingBusiness(1);
-//        Transport car1 = new Car("DF2542DC");
-//        Transport car2 = new Car("DF2542DC");
-//        parking.park(car1);
-//        assertEquals(-1, parking.park(car2));
-//    }
-//
-//    @Test
-//    public void parkTruck() {
-//        Parking parking = new TruckParking(2);
-//        Transport truck1 = new Truck("DF5487RE", 4);
-//        assertTrue(parking.park(truck1) > -1);
-//        assertTrue(parking.find(truck1) > -1);
-//    }
-//
-//    @Test
-//    public void parkCarWhenFullTruckParking() {
-//        Parking parking = new TruckParking(1);
-//        Transport truck1 = new Truck("DF5487RE", 4);
-//        Transport truck2 = new Truck("DF5458RE", 4);
-//        parking.park(truck1);
-//        assertEquals(-1, parking.park(truck2));
-//    }
-//
-//    @Test
-//    public void parkTruckIntoCarParking() {
-//        Parking parking = new ParkingBusiness(8);
-//        Transport car1 = new Car("DF2542DC");
-//        Transport truck1 = new Truck("DF5487RE", 4);
-//        parking.park(car1);
-//        assertEquals(1, parking.park(truck1));
-//    }
+
+    @Test
+    public void parkCarWhenFullCarParking() {
+        List<Transport> spaceForCars = new ArrayList<>(Collections.nCopies(1, new Car()));
+        List<Transport> spaceForTruck = new ArrayList<>(Collections.nCopies(5, new Truck()));
+        List<Transport> parkingSpace = Stream.concat(spaceForCars.stream(), spaceForTruck.stream()).collect(Collectors.toList());
+        Search searcher = new SearchFreeParking();
+        Parking parking = new ParkingBusiness(parkingSpace, searcher);
+        Transport car1 = new Car("DF2542DC");
+        Transport car2 = new Car("DF2542DC");
+        parking.allocateSpace(car1);
+        assertEquals(-1, parking.allocateSpace(car2));
+    }
+
+    @Test
+    public void parkTruck() {
+        List<Transport> spaceForCars = new ArrayList<>(Collections.nCopies(1, new Car()));
+        List<Transport> spaceForTruck = new ArrayList<>(Collections.nCopies(5, new Truck()));
+        List<Transport> parkingSpace = Stream.concat(spaceForCars.stream(), spaceForTruck.stream()).collect(Collectors.toList());
+        Search searcher = new SearchFreeParking();
+        Parking parking = new ParkingBusiness(parkingSpace, searcher);
+        Transport truck1 = new Truck("DF5487RE", 4);
+        assertEquals(1, parking.allocateSpace(truck1));
+        assertTrue(searcher.find(truck1, parking.getParkingSchema()) > -1);
+    }
+
+    @Test
+    public void parkTruckWhenFullTruckParkingThenFalse() {
+        List<Transport> spaceForCars = new ArrayList<>(Collections.nCopies(1, new Car()));
+        List<Transport> spaceForTruck = new ArrayList<>(Collections.nCopies(1, new Truck()));
+        List<Transport> parkingSpace = Stream.concat(spaceForCars.stream(), spaceForTruck.stream()).collect(Collectors.toList());
+        Search searcher = new SearchFreeParking();
+        Parking parking = new ParkingBusiness(parkingSpace, searcher);
+        Transport truck1 = new Truck("DF5487RE", 4);
+        Transport truck2 = new Truck("DF5458RE", 4);
+        parking.allocateSpace(truck1);
+        assertEquals(-1, parking.allocateSpace(truck2));
+    }
+
+    @Test
+    public void parkTruckIntoCarParking() {
+        List<Transport> spaceForCars = new ArrayList<>(Collections.nCopies(5, new Car()));
+        List<Transport> spaceForTruck = new ArrayList<>(Collections.nCopies(1, new Truck()));
+        List<Transport> parkingSpace = Stream.concat(spaceForCars.stream(), spaceForTruck.stream()).collect(Collectors.toList());
+        Search searcher = new SearchFreeParking();
+        Parking parking = new ParkingBusiness(parkingSpace, searcher);
+        Transport car1 = new Car("DF2542DC");
+        Transport truck1 = new Truck("DF5487RE", 4);
+        Transport truck2 = new Truck("DF5458RE", 4);
+        parking.allocateSpace(car1);
+        parking.allocateSpace(truck1);
+        assertEquals(1, parking.allocateSpace(truck2));
+    }
 }
