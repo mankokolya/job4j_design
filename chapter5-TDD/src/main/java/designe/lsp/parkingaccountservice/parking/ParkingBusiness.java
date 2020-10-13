@@ -28,15 +28,15 @@ public class ParkingBusiness extends ParkingModel implements Accept {
                 super.park(transport, initialIndex);
                 parkedIndex = initialIndex;
             } else {
-                if (transport.getSize() == 4) {
-                    parkedIndex = parkTruckWhenNoPlaceForTrucksLeft(transport);
+                if (transport.getSize() > 1) {
+                    parkedIndex = parkOversizeWhenNoAssignedSpaceLeft(transport);
                 }
             }
         }
         return parkedIndex;
     }
 
-    private int parkTruckWhenNoPlaceForTrucksLeft(Transport transport) {
+    private int parkOversizeWhenNoAssignedSpaceLeft(Transport transport) {
         int initialIndex = searcher.findFreeSpaceForOversize(transport.getSize(), super.getParkingSchema());
         if (initialIndex > -1) {
             super.parkOverSize(transport, initialIndex);
