@@ -20,8 +20,6 @@ public abstract class Item {
 
     @Override
     public String toString() {
-        return "Item{"
-                + "title='" + title + '\''
-                + ", isFile=" + isFile + '}';
+        return title;
     }
 }

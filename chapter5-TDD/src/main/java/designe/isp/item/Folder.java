@@ -24,13 +24,26 @@ public class Folder extends Item implements Add, Get {
     @Override
     public boolean addToFolder(String name, Item item) {
         boolean added = false;
-        Optional<Item> item2 = this.items.stream().filter(item1 -> item1.getTitle().equals(name)).findAny();
-        if (item2.isPresent() && !item2.get().isFile()) {
-            Folder folder = (Folder) item2.get();
-            folder.addToRoot(item);
+        Optional<Item> folder = findFolder(name, this.items);
+        if (folder.isPresent()) {
+            Folder root = (Folder) folder.get();
+            root.addToRoot(item);
             added = true;
         }
         return added;
+    }
+
+    private Optional<Item> findFolder(String name, List<Item> items) {
+        Optional<Item> folder = Optional.empty();
+        for (Item item : items) {
+            if (item.getTitle().equals(name)) {
+                return Optional.of(item);
+            }
+            if (!item.isFile()) {
+                findFolder(name, ((Folder) item).get());
+            }
+        }
+        return folder;
     }
 
     @Override
