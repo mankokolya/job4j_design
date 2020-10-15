@@ -40,7 +40,7 @@ public class Folder extends Item implements Add, Get {
                 return Optional.of(item);
             }
             if (!item.isFile()) {
-                findFolder(name, ((Folder) item).get());
+                folder = findFolder(name, ((Folder) item).get());
             }
         }
         return folder;
