@@ -5,7 +5,7 @@ public class Field {
 
     private int size = 3;
 
-    Field() {
+    public Field() {
         points = new Point[this.size][this.size];
     }
 
@@ -23,6 +23,9 @@ public class Field {
         if (cellFree(row, column)) {
             points[row][column] = point;
         }
+    }
+    public int getSize() {
+        return this.size;
     }
 
     private boolean cellFree(int row, int column) {

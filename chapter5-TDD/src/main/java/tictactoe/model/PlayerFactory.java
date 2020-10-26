@@ -1,15 +1,11 @@
 package tictactoe.model;
 
 public class PlayerFactory {
-    enum PlayerType {
-        Human,
-        Bot
-    }
 
-    public static Player createPlayer(PlayerType type, String name, String signature) {
+    public static Player createPlayer(PlayerType type, String name) {
         return switch (type) {
-            case Human -> new HumanPlayer(name, signature);
-            case Bot -> new Bot(name, signature);
+            case Human -> new HumanPlayer(name);
+            case Bot -> new Bot(name);
         };
     }
 }
