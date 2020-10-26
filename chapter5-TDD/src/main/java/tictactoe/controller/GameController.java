@@ -4,18 +4,18 @@ import tictactoe.logic.GameEvaluator;
 import tictactoe.model.*;
 import tictactoe.view.View;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 public class GameController {
-    private enum GameState {
+
+    public enum GameState {
         AddingPlayers,
         ChooseWhoStarts,
-        StartGame,
         WinnerRevealed;
     }
 
-    private Field field;
+    private Board board;
     private List<Player> players;
     private Player winner;
     private View view;
@@ -24,10 +24,10 @@ public class GameController {
     private GameEvaluator evaluator;
     private Player currentPlayer;
 
-   public GameController(View view, Field field, GameEvaluator evaluator) {
+    public GameController(View view, Board board, GameEvaluator evaluator) {
         this.view = view;
-        this.field = field;
-        players = Arrays.asList(new Player[2]);
+        this.board = board;
+        players = new ArrayList<>();
         gameState = GameState.AddingPlayers;
         movesMade = 0;
         this.evaluator = evaluator;
@@ -38,7 +38,7 @@ public class GameController {
         while (true) {
             switch (gameState) {
                 case AddingPlayers -> view.promptForPlayers();
-                case ChooseWhoStarts -> view.promptForPlayerToStart();
+                case ChooseWhoStarts -> view.promptForPlayerToStart(players.get(0), players.get(1));
                 case WinnerRevealed -> view.promptForNewGame();
                 default -> throw new IllegalStateException("Unexpected value: " + gameState);
             }
@@ -48,7 +48,6 @@ public class GameController {
     public void addPlayer(PlayerType type, String name) {
         if (gameState == GameState.AddingPlayers) {
             players.add(PlayerFactory.createPlayer(type, name));
-            view.showPlayerName();
         }
     }
 
@@ -58,7 +57,6 @@ public class GameController {
             view.displayStartingPlayer(players.get(0).getName());
             assignSignature();
             currentPlayer = players.get(0);
-            gameState = GameState.StartGame;
         }
     }
 
@@ -71,8 +69,9 @@ public class GameController {
     }
 
     public void startGame() {
-        while (winner == null && movesMade < field.getSize()) {
-            view.displayBoard();
+        view.displayPlayers(players.get(0).getName(), players.get(1).getName());
+        while (winner == null && movesMade < board.getSize()) {
+            view.displayBoard(this.board);
             view.promptForMove(currentPlayer.getName());
             if (!evaluateWinner()) {
                 changeCurrentPlayer();
@@ -92,7 +91,7 @@ public class GameController {
 
     private boolean evaluateWinner() {
         boolean result = false;
-        if (evaluator.evaluate(this.field)) {
+        if (evaluator.evaluate(this.board)) {
             winner = currentPlayer;
             result = true;
         }
@@ -102,5 +101,13 @@ public class GameController {
     private void assignSignature() {
         players.get(0).setSignature(Signature.X.toString());
         players.get(1).setSignature(Signature.O.toString());
+    }
+
+    public void setGameState(GameState gameState) {
+        this.gameState = gameState;
+    }
+
+    public String getPoint(int row, int column) {
+        return this.board.getPoint(row, column);
     }
 }

@@ -1,7 +1,7 @@
 package tictactoe.logic;
 
-import tictactoe.model.Field;
+import tictactoe.model.Board;
 
 public interface GameEvaluator {
-    boolean evaluate(Field field);
+    boolean evaluate(Board board);
 }

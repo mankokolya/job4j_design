@@ -1,6 +1,8 @@
 package tictactoe.view;
 
 import tictactoe.controller.GameController;
+import tictactoe.model.Board;
+import tictactoe.model.Player;
 
 public interface View {
 
@@ -10,7 +12,7 @@ public interface View {
 
     void promptForNewGame();
 
-    void promptForPlayerToStart();
+    void promptForPlayerToStart(Player player1, Player player2);
 
     void setController(GameController gc);
 
@@ -18,7 +20,9 @@ public interface View {
 
     void displayStartingPlayer(String name);
 
-    void displayBoard();
+    void displayBoard(Board board);
 
     void showWinner(String name);
+
+    void displayPlayers(String player1Name, String player2Name);
 }

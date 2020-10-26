@@ -1,12 +1,11 @@
 package tictactoe.logic;
 
-import tictactoe.controller.GameController;
-import tictactoe.model.Field;
+import tictactoe.model.Board;
 
 public class StandardOneGameEvaluator implements GameEvaluator {
 
     @Override
-    public boolean evaluate(Field field) {
+    public boolean evaluate(Board board) {
         return false;
     }
 }
