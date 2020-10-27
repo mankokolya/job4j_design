@@ -2,6 +2,7 @@ package tictactoe.view;
 
 import tictactoe.controller.GameController;
 import tictactoe.model.Board;
+import tictactoe.model.CellValue;
 import tictactoe.model.Player;
 import tictactoe.model.PlayerType;
 
@@ -34,13 +35,13 @@ public class CommandLineView implements View {
     }
 
     @Override
-    public void promptForMove(String name) {
-        System.out.println(name + "! Make your move.");
+    public void promptForMove(String name, CellValue cellValue) {
+        System.out.println(name + "! Make your choice.");
         System.out.print("Enter row index of free cell: ");
         int row = keyboard.nextInt();
         System.out.print("Enter column index of free cell: ");
         int column = keyboard.nextInt();
-
+        controller.setPoint(row, column, cellValue);
     }
 
     @Override
@@ -77,26 +78,29 @@ public class CommandLineView implements View {
         displayHeader(board.getSize());
         displayRowsDelimiter(board.getSize());
         for (int i = 0; i < board.getSize(); i++) {
-            System.out.print(i + 1 + "|");
+            System.out.print(i + 1 + "| ");
             for (int j = 0; j < board.getSize(); j++) {
-                System.out.print(controller.getPoint(i, j) + "|");
+                System.out.print(controller.getPoint(i, j) + " | ");
             }
             System.out.println();
         }
     }
 
     private void displayRowsDelimiter(int size) {
-        for (int i = 0; i <= size; i++) {
-            System.out.print("-");
+        for (int i = 0; i <= size * 5 - 1; i++) {
+            System.out.print("=");
         }
         System.out.println();
     }
 
     private void displayHeader(int size) {
         for (int i = 0; i <= size; i++) {
-            System.out.print(i + "|");
+            if (i == 0) {
+                continue;
+            }
+            System.out.print(" | " + i);
         }
-        System.out.println();
+        System.out.println(" |");
     }
 
     @Override

@@ -2,6 +2,7 @@ package tictactoe.model;
 
 public interface Player {
     void markCell(Point point);
-    void setSignature(String signature);
+    void setCellValue(CellValue cellValue);
     String getName();
+    CellValue getCellValue();
 }

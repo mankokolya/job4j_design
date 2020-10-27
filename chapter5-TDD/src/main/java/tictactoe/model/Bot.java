@@ -5,7 +5,7 @@ import java.util.Objects;
 public class Bot implements Player {
 
     private String name = "Bot: ";
-    private String signature;
+    private CellValue cellValue;
 
     Bot(String name) {
         this.name += name;
@@ -17,13 +17,18 @@ public class Bot implements Player {
     }
 
     @Override
-    public void setSignature(String signature) {
-        this.signature = signature;
+    public void setCellValue(CellValue cellValue) {
+        this.cellValue = cellValue;
     }
 
     @Override
     public String getName() {
         return this.name;
+    }
+
+    @Override
+    public CellValue getCellValue() {
+        return this.cellValue;
     }
 
     @Override

@@ -2,13 +2,14 @@ package tictactoe.view;
 
 import tictactoe.controller.GameController;
 import tictactoe.model.Board;
+import tictactoe.model.CellValue;
 import tictactoe.model.Player;
 
 public interface View {
 
     void promptForPlayers();
 
-    void promptForMove(String name);
+    void promptForMove(String name, CellValue cellValue);
 
     void promptForNewGame();
 

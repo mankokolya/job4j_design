@@ -72,7 +72,7 @@ public class GameController {
         view.displayPlayers(players.get(0).getName(), players.get(1).getName());
         while (winner == null && movesMade < board.getSize()) {
             view.displayBoard(this.board);
-            view.promptForMove(currentPlayer.getName());
+            view.promptForMove(currentPlayer.getName(), currentPlayer.getCellValue());
             if (!evaluateWinner()) {
                 changeCurrentPlayer();
             }
@@ -99,8 +99,8 @@ public class GameController {
     }
 
     private void assignSignature() {
-        players.get(0).setSignature(Signature.X.toString());
-        players.get(1).setSignature(Signature.O.toString());
+        players.get(0).setCellValue(CellValue.CROSS);
+        players.get(1).setCellValue(CellValue.ZERO);
     }
 
     public void setGameState(GameState gameState) {
@@ -109,5 +109,11 @@ public class GameController {
 
     public String getPoint(int row, int column) {
         return this.board.getPoint(row, column);
+    }
+
+    public void setPoint(int row, int column, CellValue cellValue) {
+        if (!this.board.setPoint(row, column, cellValue)) {
+            view.promptForMove(currentPlayer.getName(), currentPlayer.getCellValue());
+        }
     }
 }

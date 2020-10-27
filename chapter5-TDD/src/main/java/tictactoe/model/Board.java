@@ -18,12 +18,13 @@ public class Board {
         System.out.println("Field's size should be odd number");
     }
 
-    public void setPoint(Point point) {
-        int row = point.getRow();
-        int column = point.getColumn();
+    public boolean setPoint(int row, int column, CellValue cellValue) {
+        boolean result = false;
         if (cellFree(row, column)) {
-            points[row][column] = point;
+            points[row][column].setCellValue(cellValue);
+            result = true;
         }
+        return result;
     }
 
     public int getSize() {
@@ -31,7 +32,7 @@ public class Board {
     }
 
     private boolean cellFree(int row, int column) {
-        return points[row][column] == null;
+        return points[row][column].getCellValue().equals("E");
     }
 
     private void initializeEmptyBoard(int size) {
