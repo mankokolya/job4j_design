@@ -44,7 +44,7 @@ public class Board {
         }
     }
 
-    public String getPoint(int row, int column) {
+    public String getPointValue(int row, int column) {
         return this.points[row][column].getCellValue();
     }
 }

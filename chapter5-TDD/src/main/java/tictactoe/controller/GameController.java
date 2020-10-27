@@ -54,7 +54,7 @@ public class GameController {
     public void putStartingPlayerFirst(Player startingPlayer) {
         if (gameState == GameState.ChooseWhoStarts) {
             swapPlayers(startingPlayer);
-            view.displayStartingPlayer(players.get(0).getName());
+//            view.displayStartingPlayer(players.get(0).getName());
             assignSignature();
             currentPlayer = players.get(0);
         }
@@ -70,13 +70,15 @@ public class GameController {
 
     public void startGame() {
         view.displayPlayers(players.get(0).getName(), players.get(1).getName());
-        while (winner == null && movesMade < board.getSize()) {
+        while (winner == null && movesMade < (int) Math.pow(board.getSize(), 2)) {
             view.displayBoard(this.board);
             view.promptForMove(currentPlayer.getName(), currentPlayer.getCellValue());
+            movesMade++;
             if (!evaluateWinner()) {
                 changeCurrentPlayer();
             }
         }
+        view.displayBoard(this.board);
         displayWinner();
         gameState = GameState.WinnerRevealed;
     }
@@ -91,7 +93,7 @@ public class GameController {
 
     private boolean evaluateWinner() {
         boolean result = false;
-        if (evaluator.evaluate(this.board)) {
+        if (evaluator.evaluate(this.board, this.currentPlayer.getCellValue().getValue())) {
             winner = currentPlayer;
             result = true;
         }
@@ -108,12 +110,17 @@ public class GameController {
     }
 
     public String getPoint(int row, int column) {
-        return this.board.getPoint(row, column);
+        return this.board.getPointValue(row, column);
     }
 
     public void setPoint(int row, int column, CellValue cellValue) {
-        if (!this.board.setPoint(row, column, cellValue)) {
+        if (!this.board.setPoint(row - 1, column - 1, cellValue)) {
+            view.displayCellOccupied(row, column);
             view.promptForMove(currentPlayer.getName(), currentPlayer.getCellValue());
         }
+    }
+
+    public boolean checkInDiapason(int value) {
+        return value <= this.board.getSize();
     }
 }

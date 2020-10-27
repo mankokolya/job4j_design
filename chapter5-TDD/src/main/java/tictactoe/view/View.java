@@ -17,13 +17,13 @@ public interface View {
 
     void setController(GameController gc);
 
-    void showPlayerName();
-
-    void displayStartingPlayer(String name);
+//    void displayStartingPlayer(String name);
 
     void displayBoard(Board board);
 
     void showWinner(String name);
 
     void displayPlayers(String player1Name, String player2Name);
+
+    void displayCellOccupied(int row, int column);
 }

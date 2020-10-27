@@ -11,8 +11,7 @@ import java.util.Scanner;
 public class CommandLineView implements View {
 
     private GameController controller;
-    private Scanner keyboard = new Scanner(System.in);
-
+    private final Scanner keyboard = new Scanner(System.in);
 
     @Override
     public void promptForPlayers() {
@@ -36,13 +35,31 @@ public class CommandLineView implements View {
 
     @Override
     public void promptForMove(String name, CellValue cellValue) {
+        int row = getRow(name);
+        int column = getColumn();
+        controller.setPoint(row, column, cellValue);
+    }
+
+    private int getColumn() {
+        System.out.print("Enter column index of free cell: ");
+        int column = keyboard.nextInt();
+        while (!controller.checkInDiapason(column)) {
+            column = getColumn();
+        }
+        return column;
+    }
+
+    private int getRow(String name) {
         System.out.println(name + "! Make your choice.");
         System.out.print("Enter row index of free cell: ");
         int row = keyboard.nextInt();
-        System.out.print("Enter column index of free cell: ");
-        int column = keyboard.nextInt();
-        controller.setPoint(row, column, cellValue);
+        while (!controller.checkInDiapason(row)) {
+            System.out.println("Your entered a wrong index value. Please try again!");
+            row = getRow(name);
+        }
+        return row;
     }
+
 
     @Override
     public void promptForNewGame() {
@@ -63,20 +80,17 @@ public class CommandLineView implements View {
         this.controller = gc;
     }
 
-    @Override
-    public void showPlayerName() {
 
-    }
-
-    @Override
-    public void displayStartingPlayer(String name) {
-
-    }
+//    @Override
+//    public void displayStartingPlayer(String name) {
+//
+//    }
 
     @Override
     public void displayBoard(Board board) {
         displayHeader(board.getSize());
         displayRowsDelimiter(board.getSize());
+        System.out.println();
         for (int i = 0; i < board.getSize(); i++) {
             System.out.print(i + 1 + "| ");
             for (int j = 0; j < board.getSize(); j++) {
@@ -84,6 +98,7 @@ public class CommandLineView implements View {
             }
             System.out.println();
         }
+        System.out.println();
     }
 
     private void displayRowsDelimiter(int size) {
@@ -105,11 +120,17 @@ public class CommandLineView implements View {
 
     @Override
     public void showWinner(String name) {
-
+        System.out.println(name + " is the Winner of the game");
     }
 
     @Override
     public void displayPlayers(String player1Name, String player2Name) {
         System.out.println("First player: " + player1Name + System.lineSeparator() + "Second player: " + player2Name);
+    }
+
+    @Override
+    public void displayCellOccupied(int row, int column) {
+        System.out.println("the cell with row " + row + " and column " + column + " is occupied");
+        System.out.println("Please choose empty one");
     }
 }
