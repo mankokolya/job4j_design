@@ -1,12 +1,12 @@
 package tictactoe.model;
 
 
-public class Point {
+public class Cell {
     private int row;
     private int column;
     private CellValue cellValue;
 
-    Point(int row, int column, CellValue cellValue) {
+    Cell(int row, int column, CellValue cellValue) {
         this.row = row;
         this.column = column;
         this.cellValue = cellValue;

@@ -7,7 +7,7 @@ public class HumanPlayer extends Player {
     }
 
     @Override
-    void chooseFreeCell(Point point) {
+    void chooseFreeCell(Board board) {
 
     }
 }

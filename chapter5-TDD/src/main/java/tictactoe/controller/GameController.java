@@ -84,7 +84,11 @@ public class GameController {
     }
 
     private void displayWinner() {
-        view.showWinner(winner.getName());
+        if (winner != null) {
+            view.showWinner(winner.getName());
+        } else {
+            view.displayDrawResult("We have a draw");
+        }
     }
 
     private void changeCurrentPlayer() {

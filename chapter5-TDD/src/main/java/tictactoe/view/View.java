@@ -17,8 +17,6 @@ public interface View {
 
     void setController(GameController gc);
 
-//    void displayStartingPlayer(String name);
-
     void displayBoard(Board board);
 
     void showWinner(String name);
@@ -26,4 +24,6 @@ public interface View {
     void displayPlayers(String player1Name, String player2Name);
 
     void displayCellOccupied(int row, int column);
+
+    void displayDrawResult(String drawResult);
 }

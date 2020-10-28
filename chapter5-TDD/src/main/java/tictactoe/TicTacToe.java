@@ -7,7 +7,7 @@ import tictactoe.view.CommandLineView;
 
 public class TicTacToe {
     public static void main(String[] args) {
-        GameController gameController = new GameController(new CommandLineView(), new Board(5),
+        GameController gameController = new GameController(new CommandLineView(), new Board(),
                 new StandardOneGameEvaluator());
         gameController.run();
     }

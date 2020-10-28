@@ -1,10 +1,7 @@
 package tictactoe.view;
 
 import tictactoe.controller.GameController;
-import tictactoe.model.Board;
-import tictactoe.model.CellValue;
-import tictactoe.model.Player;
-import tictactoe.model.PlayerType;
+import tictactoe.model.*;
 
 import java.util.Scanner;
 
@@ -80,12 +77,6 @@ public class CommandLineView implements View {
         this.controller = gc;
     }
 
-
-//    @Override
-//    public void displayStartingPlayer(String name) {
-//
-//    }
-
     @Override
     public void displayBoard(Board board) {
         displayHeader(board.getSize());
@@ -131,5 +122,10 @@ public class CommandLineView implements View {
     public void displayCellOccupied(int row, int column) {
         System.out.println("the cell with row " + row + " and column " + column + " is occupied");
         System.out.println("Please choose empty one");
+    }
+
+    @Override
+    public void displayDrawResult(String drawResult) {
+        System.out.println(drawResult);
     }
 }

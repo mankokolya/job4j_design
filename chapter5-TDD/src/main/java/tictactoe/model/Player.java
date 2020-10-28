@@ -42,5 +42,5 @@ public abstract class Player {
         return Objects.hash(name);
     }
 
-    abstract void chooseFreeCell(Point point);
+    abstract void chooseFreeCell(Board board);
 }

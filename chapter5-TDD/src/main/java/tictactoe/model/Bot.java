@@ -7,8 +7,10 @@ public class Bot extends Player {
         super("Bot:" + name);
     }
 
+
+
     @Override
-    public void chooseFreeCell(Point point) {
+    public void chooseFreeCell(Board board) {
 
     }
 }

@@ -1,7 +1,7 @@
 package tictactoe.model;
 
 public class Board {
-    private Point[][] points;
+    private Cell[][] cells;
 
     private int size = 3;
 
@@ -22,7 +22,7 @@ public class Board {
     public boolean setPoint(int row, int column, CellValue cellValue) {
         boolean result = false;
         if (cellFree(row, column)) {
-            points[row][column].setCellValue(cellValue);
+            cells[row][column].setCellValue(cellValue);
             result = true;
         }
         return result;
@@ -33,19 +33,19 @@ public class Board {
     }
 
     private boolean cellFree(int row, int column) {
-        return points[row][column].getCellValue().equals("E");
+        return cells[row][column].getCellValue().equals("E");
     }
 
     private void initializeEmptyBoard(int size) {
-        this.points = new Point[this.size][this.size];
-        for (int i = 0; i < points.length; i++) {
-            for (int j = 0; j < points[i].length; j++) {
-                points[i][j] = new Point(i, j, CellValue.EMPTY);
+        this.cells = new Cell[this.size][this.size];
+        for (int i = 0; i < cells.length; i++) {
+            for (int j = 0; j < cells[i].length; j++) {
+                cells[i][j] = new Cell(i, j, CellValue.EMPTY);
             }
         }
     }
 
     public String getPointValue(int row, int column) {
-        return this.points[row][column].getCellValue();
+        return this.cells[row][column].getCellValue();
     }
 }
