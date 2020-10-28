@@ -121,6 +121,6 @@ public class GameController {
     }
 
     public boolean checkInDiapason(int value) {
-        return value <= this.board.getSize();
+        return value > this.board.getSize();
     }
 }

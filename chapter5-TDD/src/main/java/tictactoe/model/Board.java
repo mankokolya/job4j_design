@@ -10,12 +10,13 @@ public class Board {
     }
 
 
-    Board(int size) {
+    public Board(int size) {
         if (size >= 3 && size % 2 != 0) {
             this.size = size;
             initializeEmptyBoard(this.size);
+        } else {
+            System.out.println("Field's size should be odd number");
         }
-        System.out.println("Field's size should be odd number");
     }
 
     public boolean setPoint(int row, int column, CellValue cellValue) {

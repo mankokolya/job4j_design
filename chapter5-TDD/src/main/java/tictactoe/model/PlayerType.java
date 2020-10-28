@@ -16,6 +16,7 @@ public enum PlayerType {
                 return val;
             }
         }
+        System.out.println("You entered the wrong type. Please choose correct one!!!");
         return null;
     }
 }

@@ -1,8 +1,46 @@
 package tictactoe.model;
 
-public interface Player {
-    void markCell(Point point);
-    void setCellValue(CellValue cellValue);
-    String getName();
-    CellValue getCellValue();
+import java.util.Objects;
+
+public abstract class Player {
+
+    private String name;
+    private CellValue cellValue;
+
+    public Player(String name) {
+        this.name = name;
+    }
+
+    public void setCellValue(CellValue cellValue) {
+        this.cellValue = cellValue;
+    }
+
+
+    public String getName() {
+        return this.name;
+    }
+
+
+    public CellValue getCellValue() {
+        return this.cellValue;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        HumanPlayer that = (HumanPlayer) o;
+        return name.equals(that.getName());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
+    }
+
+    abstract void chooseFreeCell(Point point);
 }

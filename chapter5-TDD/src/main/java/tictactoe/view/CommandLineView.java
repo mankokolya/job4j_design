@@ -43,7 +43,7 @@ public class CommandLineView implements View {
     private int getColumn() {
         System.out.print("Enter column index of free cell: ");
         int column = keyboard.nextInt();
-        while (!controller.checkInDiapason(column)) {
+        while (controller.checkInDiapason(column)) {
             column = getColumn();
         }
         return column;
@@ -53,7 +53,7 @@ public class CommandLineView implements View {
         System.out.println(name + "! Make your choice.");
         System.out.print("Enter row index of free cell: ");
         int row = keyboard.nextInt();
-        while (!controller.checkInDiapason(row)) {
+        while (controller.checkInDiapason(row)) {
             System.out.println("Your entered a wrong index value. Please try again!");
             row = getRow(name);
         }
@@ -90,7 +90,6 @@ public class CommandLineView implements View {
     public void displayBoard(Board board) {
         displayHeader(board.getSize());
         displayRowsDelimiter(board.getSize());
-        System.out.println();
         for (int i = 0; i < board.getSize(); i++) {
             System.out.print(i + 1 + "| ");
             for (int j = 0; j < board.getSize(); j++) {
@@ -102,7 +101,7 @@ public class CommandLineView implements View {
     }
 
     private void displayRowsDelimiter(int size) {
-        for (int i = 0; i <= size * 5 - 1; i++) {
+        for (int i = 0; i <= size * 4 + 1; i++) {
             System.out.print("=");
         }
         System.out.println();
