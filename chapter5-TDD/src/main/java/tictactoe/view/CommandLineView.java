@@ -64,7 +64,7 @@ public class CommandLineView implements View {
     }
 
     @Override
-    public void promptForPlayerToStart(Player player1, Player player2) {
+    public void promptForPlayerToStart(Players player1, Players player2) {
         System.out.println("Choose the player who starts the game.");
         System.out.println("1 for " + player1.getName() + System.lineSeparator() + "2 for " + player2.getName());
         int playerNumber = keyboard.nextInt();

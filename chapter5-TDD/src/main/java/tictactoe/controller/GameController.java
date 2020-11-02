@@ -16,13 +16,13 @@ public class GameController {
     }
 
     private Board board;
-    private List<Player> players;
-    private Player winner;
+    private List<Players> players;
+    private Players winner;
     private View view;
     private GameState gameState;
     private int movesMade;
     private GameEvaluator evaluator;
-    private Player currentPlayer;
+    private Players currentPlayer;
 
     public GameController(View view, Board board, GameEvaluator evaluator) {
         this.view = view;
@@ -51,18 +51,17 @@ public class GameController {
         }
     }
 
-    public void putStartingPlayerFirst(Player startingPlayer) {
+    public void putStartingPlayerFirst(Players startingPlayer) {
         if (gameState == GameState.ChooseWhoStarts) {
             swapPlayers(startingPlayer);
-//            view.displayStartingPlayer(players.get(0).getName());
             assignSignature();
             currentPlayer = players.get(0);
         }
     }
 
-    private void swapPlayers(Player startingPlayer) {
+    private void swapPlayers(Players startingPlayer) {
         if (players.get(0) != startingPlayer) {
-            Player temp = players.get(0);
+            Players temp = players.get(0);
             players.set(0, players.get(1));
             players.set(1, temp);
         }
@@ -72,7 +71,8 @@ public class GameController {
         view.displayPlayers(players.get(0).getName(), players.get(1).getName());
         while (winner == null && movesMade < (int) Math.pow(board.getSize(), 2)) {
             view.displayBoard(this.board);
-            view.promptForMove(currentPlayer.getName(), currentPlayer.getCellValue());
+            currentPlayer.makeChoice(this.board);
+//            view.promptForMove(currentPlayer.getName(), currentPlayer.getCellValue());
             movesMade++;
             if (!evaluateWinner()) {
                 changeCurrentPlayer();

@@ -1,5 +1,9 @@
 package tictactoe.model;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class Board {
     private Cell[][] cells;
 
@@ -8,7 +12,6 @@ public class Board {
     public Board() {
         initializeEmptyBoard(size);
     }
-
 
     public Board(int size) {
         if (size >= 3 && size % 2 != 0) {
@@ -47,5 +50,12 @@ public class Board {
 
     public String getPointValue(int row, int column) {
         return this.cells[row][column].getCellValue();
+    }
+
+    public List<Cell> getFreeCells() {
+        return Arrays.stream(cells)
+                .flatMap(Arrays::stream)
+                .filter(cell -> cell.getCellValue().equals(CellValue.EMPTY.getValue()))
+                .collect(Collectors.toList());
     }
 }

@@ -3,7 +3,7 @@ package tictactoe.view;
 import tictactoe.controller.GameController;
 import tictactoe.model.Board;
 import tictactoe.model.CellValue;
-import tictactoe.model.Player;
+import tictactoe.model.Players;
 
 public interface View {
 
@@ -13,7 +13,7 @@ public interface View {
 
     void promptForNewGame();
 
-    void promptForPlayerToStart(Player player1, Player player2);
+    void promptForPlayerToStart(Players player1, Players player2);
 
     void setController(GameController gc);
 
