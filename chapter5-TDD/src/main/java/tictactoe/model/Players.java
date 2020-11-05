@@ -5,12 +5,10 @@ import java.util.Objects;
 public abstract class Players implements Player {
 
     private String name;
-    private PlayerType type;
     private CellValue cellValue;
 
-    public Players(String name, PlayerType type) {
+    public Players(String name) {
         this.name = name;
-        this.type = type;
     }
 
     public void setCellValue(CellValue cellValue) {

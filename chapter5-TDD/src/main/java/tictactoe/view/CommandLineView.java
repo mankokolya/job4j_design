@@ -5,6 +5,9 @@ import tictactoe.model.*;
 
 import java.util.Scanner;
 
+import static tictactoe.controller.GameController.GameState.ChooseWhoStarts;
+import static tictactoe.controller.GameController.GameState.Exit;
+
 public class CommandLineView implements View {
 
     private GameController controller;
@@ -18,7 +21,7 @@ public class CommandLineView implements View {
             String name = keyboard.nextLine();
             controller.addPlayer(type, name);
         }
-        controller.setGameState(GameController.GameState.ChooseWhoStarts);
+        controller.setGameState(ChooseWhoStarts);
     }
 
     private PlayerType getPlayerType() {
@@ -31,36 +34,10 @@ public class CommandLineView implements View {
     }
 
     @Override
-    public void promptForMove(String name, CellValue cellValue) {
-        int row = getRow(name);
-        int column = getColumn();
-        controller.setPoint(row, column, cellValue);
-    }
-
-    private int getColumn() {
-        System.out.print("Enter column index of free cell: ");
-        int column = keyboard.nextInt();
-        while (controller.checkInDiapason(column)) {
-            column = getColumn();
-        }
-        return column;
-    }
-
-    private int getRow(String name) {
-        System.out.println(name + "! Make your choice.");
-        System.out.print("Enter row index of free cell: ");
-        int row = keyboard.nextInt();
-        while (controller.checkInDiapason(row)) {
-            System.out.println("Your entered a wrong index value. Please try again!");
-            row = getRow(name);
-        }
-        return row;
-    }
-
-
-    @Override
     public void promptForNewGame() {
-
+        System.out.println("If you would like to play again please enter 1 else 0");
+        int choice = keyboard.nextInt();
+        controller.setGameState(choice == 1 ? ChooseWhoStarts : Exit);
     }
 
     @Override
@@ -69,7 +46,7 @@ public class CommandLineView implements View {
         System.out.println("1 for " + player1.getName() + System.lineSeparator() + "2 for " + player2.getName());
         int playerNumber = keyboard.nextInt();
         controller.putStartingPlayerFirst(playerNumber == 1 ? player1 : player2);
-        controller.startGame();
+        controller.setGameState(GameController.GameState.CreatingBoard);
     }
 
     @Override
@@ -127,5 +104,24 @@ public class CommandLineView implements View {
     @Override
     public void displayDrawResult(String drawResult) {
         System.out.println(drawResult);
+    }
+
+    @Override
+    public void displayMessage(String message) {
+        System.out.println(message);
+    }
+
+    @Override
+    public void promptForBoardSize() {
+        System.out.println("Enter the size of the playing board.");
+        System.out.println("The number should be odd(3, 5, 7, 9 ...)");
+        System.out.println("Else you will be provided with default size - 3");
+        int size = getIntInput();
+        controller.createNewBoard(size);
+    }
+
+    @Override
+    public int getIntInput() {
+        return keyboard.nextInt();
     }
 }

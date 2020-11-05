@@ -1,7 +1,7 @@
 package tictactoe.model;
 
 public enum CellValue {
-    EMPTY("E"),
+    EMPTY(" "),
     CROSS("X"),
     ZERO("0");
 

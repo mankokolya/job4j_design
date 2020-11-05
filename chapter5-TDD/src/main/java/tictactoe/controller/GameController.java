@@ -10,9 +10,11 @@ import java.util.List;
 public class GameController {
 
     public enum GameState {
+        CreatingBoard,
         AddingPlayers,
         ChooseWhoStarts,
-        WinnerRevealed;
+        WinnerRevealed,
+        Start, Exit
     }
 
     private Board board;
@@ -24,9 +26,8 @@ public class GameController {
     private GameEvaluator evaluator;
     private Players currentPlayer;
 
-    public GameController(View view, Board board, GameEvaluator evaluator) {
+    public GameController(View view, GameEvaluator evaluator) {
         this.view = view;
-        this.board = board;
         players = new ArrayList<>();
         gameState = GameState.AddingPlayers;
         movesMade = 0;
@@ -35,11 +36,17 @@ public class GameController {
     }
 
     public void run() {
-        while (true) {
+        boolean playTheGame = true;
+        while (playTheGame) {
             switch (gameState) {
                 case AddingPlayers -> view.promptForPlayers();
                 case ChooseWhoStarts -> view.promptForPlayerToStart(players.get(0), players.get(1));
+                case CreatingBoard -> view.promptForBoardSize();
+                case Start -> startGame();
                 case WinnerRevealed -> view.promptForNewGame();
+                case Exit -> {
+                    playTheGame = false;
+                }
                 default -> throw new IllegalStateException("Unexpected value: " + gameState);
             }
         }
@@ -71,8 +78,7 @@ public class GameController {
         view.displayPlayers(players.get(0).getName(), players.get(1).getName());
         while (winner == null && movesMade < (int) Math.pow(board.getSize(), 2)) {
             view.displayBoard(this.board);
-            currentPlayer.makeChoice(this.board);
-//            view.promptForMove(currentPlayer.getName(), currentPlayer.getCellValue());
+            currentPlayer.makeChoice(this.board, view);
             movesMade++;
             if (!evaluateWinner()) {
                 changeCurrentPlayer();
@@ -117,14 +123,14 @@ public class GameController {
         return this.board.getPointValue(row, column);
     }
 
-    public void setPoint(int row, int column, CellValue cellValue) {
-        if (!this.board.setPoint(row - 1, column - 1, cellValue)) {
-            view.displayCellOccupied(row, column);
-            view.promptForMove(currentPlayer.getName(), currentPlayer.getCellValue());
+    public void createNewBoard(int size) {
+        if (size >= 3 && size % 2 != 0) {
+            this.board = new Board(size);
+        } else {
+            this.board = new Board();
         }
-    }
-
-    public boolean checkInDiapason(int value) {
-        return value > this.board.getSize();
+        winner = null;
+        movesMade = 0;
+        gameState = GameState.Start;
     }
 }

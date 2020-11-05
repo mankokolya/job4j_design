@@ -1,5 +1,7 @@
 package tictactoe.model;
 
+import tictactoe.view.View;
+
 public interface Player {
-    Cell makeChoice(Board board);
+    void makeChoice(Board board, View view);
 }

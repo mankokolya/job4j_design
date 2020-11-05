@@ -9,7 +9,7 @@ public interface View {
 
     void promptForPlayers();
 
-    void promptForMove(String name, CellValue cellValue);
+//    void promptForMove(String name, CellValue cellValue);
 
     void promptForNewGame();
 
@@ -26,4 +26,9 @@ public interface View {
     void displayCellOccupied(int row, int column);
 
     void displayDrawResult(String drawResult);
+
+    int getIntInput();
+    void displayMessage(String message);
+
+    void promptForBoardSize();
 }
